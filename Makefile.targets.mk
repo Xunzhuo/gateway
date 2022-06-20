@@ -59,7 +59,10 @@ REV=$(shell git rev-parse --short HEAD)
 # Tag is the tag to use for build and push image targets.
 TAG ?= $(REV)
 
-# Build the envoy-gateway binaries in target platforms
+# Build the target binary in target platform.
+# The pattern of build.% is `build.{Platform}.{Command}`.
+# If we want to build envoy-gateway in linux amd64 platform, 
+# just execute make build.linux_amd64.envoy-gateway.
 .PHONY: build.%
 build.%:
 	$(eval COMMAND := $(word 2,$(subst ., ,$*)))
@@ -67,14 +70,15 @@ build.%:
 	$(eval OS := $(word 1,$(subst _, ,$(PLATFORM))))
 	$(eval ARCH := $(word 2,$(subst _, ,$(PLATFORM))))
 	@echo "===========> Building binary $(COMMAND) $(VERSION) for $(OS) $(ARCH)"
-	@mkdir -p $(OUTPUT_DIR)/$(OS)/$(ARCH)
-	@CGO_ENABLED=0 GOOS=$(OS) GOARCH=$(ARCH) go build -o $(OUTPUT_DIR)/$(OS)/$(ARCH)/$(COMMAND) -ldflags "$(GO_LDFLAGS)" $(ROOT_PACKAGE)/cmd/$(COMMAND)
+	@mkdir -p $(OUTPUT_DIR)/$(OS)/$(ARCH)/
+	@CGO_ENABLED=0 GOOS=$(OS) GOARCH=$(ARCH) go build -o $(OUTPUT_DIR)/$(OS)/$(ARCH)/ $(ROOT_PACKAGE)/cmd/$(COMMAND)
 
-# Build the envoy-gateway binaries in hosted platforms
+# Build the envoy-gateway binaries in the hosted platforms.
 .PHONY: build
 build:  $(addprefix build., $(addprefix $(PLATFORM)., $(BINS)))
 
 # Build the envoy-gateway binaries in multi platforms
+# It will build the linux/aamd64, linux/arm64, darwin/amd64, darwin/arm64 binaries out.
 .PHONY: build.multiarch
 build.multiarch:  $(foreach p,$(PLATFORMS),$(addprefix build., $(addprefix $(p)., $(BINS))))
 
