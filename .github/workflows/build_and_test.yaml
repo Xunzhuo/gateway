@@ -31,6 +31,7 @@ jobs:
 
       # build
       - run: make build-multiarch
+        if: github.event_name == 'pull_request'
 
       # test
       - run: make go.test.coverage
