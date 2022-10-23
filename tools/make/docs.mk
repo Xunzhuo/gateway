@@ -1,15 +1,20 @@
-DOCS_DIR := docs/latest
-DOCS_OUTPUT_DIR := docs/html/latest
+DOCS_DIR := docs/source/latest
+DOCS_OUTPUT_DIR := docs/public/html/latest
 
-DOCS_RELEASE_DIR := docs/$(RELEASE_VERSION)
-DOCS_OUTPUT_RELEASE_DIR := docs/html
+DOCS_RELEASE_DIR := docs/source/$(RELEASE_VERSION)
+DOCS_OUTPUT_RELEASE_DIR := docs/public/html/$(RELEASE_VERSION)
 
 ##@ Docs
 
 .PHONY: docs
 docs: $(tools/sphinx-build) ## Generate Envoy Gateway Docs Sources
+	cd docs && hugo --minify
 	env BUILD_VERSION="latest" $(shell go run ./cmd/envoy-gateway versions --env) $(tools/sphinx-build) -j auto -b html $(DOCS_DIR) $(DOCS_OUTPUT_DIR)
 	env BUILD_VERSION=$(RELEASE_VERSION) $(shell go run ./cmd/envoy-gateway versions --env) $(tools/sphinx-build) -j auto -b html $(DOCS_RELEASE_DIR) $(DOCS_OUTPUT_RELEASE_DIR)
+
+.PHONY: docs-preview
+docs-preview:
+	cd docs && hugo server
 
 .PHONY: docs-release
 docs-release: ## Generate Envoy Gateway Release Docs
