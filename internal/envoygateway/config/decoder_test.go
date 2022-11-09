@@ -6,6 +6,7 @@
 package config
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 
@@ -149,11 +150,14 @@ func TestDecode(t *testing.T) {
 		tc := tc
 		t.Run(tc.in, func(t *testing.T) {
 			eg, err := Decode(tc.in)
+			if err == nil && !reflect.DeepEqual(tc.out, eg) {
+				err = errors.New("input is not equal to output")
+			}
 			if tc.expect {
 				require.NoError(t, err)
 				require.Equal(t, tc.out, eg)
 			} else {
-				require.Equal(t, (!reflect.DeepEqual(tc.out, eg) || err != nil), true)
+				require.Error(t, err)
 			}
 		})
 	}

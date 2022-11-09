@@ -32,13 +32,13 @@ func Decode(cfgPath string) (*v1alpha1.EnvoyGateway, error) {
 	if gvk.Group != v1alpha1.GroupVersion.Group ||
 		gvk.Version != v1alpha1.GroupVersion.Version ||
 		gvk.Kind != v1alpha1.KindEnvoyGateway {
-		return nil, errors.New("failed to decode unmatched resource types")
+		return nil, errors.New("failed to decode unmatched resource type")
 	}
 
 	// Attempt to cast the object.
 	eg, ok := obj.(*v1alpha1.EnvoyGateway)
 	if !ok {
-		return nil, errors.New("failed to convert obj to EnvoyGateway types")
+		return nil, errors.New("failed to convert object to EnvoyGateway type")
 	}
 
 	return eg, nil
