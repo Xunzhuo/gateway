@@ -25,10 +25,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Retag and push existing gateway-dev image
         run: |
-          skopeo copy --all docker://docker.io/envoyproxy/gateway-dev:${{ env.sha_short }} docker://docker.io/envoyproxy/gateway:${{ env.release_tag }}
+          skopeo copy --all docker://docker.io/bitliu/gateway-dev:${{ env.sha_short }} docker://docker.io/bitliu/gateway:${{ env.release_tag }}
 
       - name: Generate Release Artifacts
-        run: make generate-artifacts IMAGE=envoyproxy/gateway TAG=${{ env.release_tag}} OUTPUT_DIR=release-artifacts
+        run: make generate-artifacts IMAGE=bitliu/gateway TAG=${{ env.release_tag}} OUTPUT_DIR=release-artifacts
 
       - name: Upload Release Manifests
         uses: softprops/action-gh-release@v1
