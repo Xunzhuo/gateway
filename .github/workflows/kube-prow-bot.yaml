@@ -21,8 +21,11 @@ env:
   # This commands is for anyone who can use it
   COMMON_PLUGINS: |-
     assign
+    unassign
     kind
+    remove-kind
     cc
+    uncc
   # This commands is for author of issue or PR
   AUTHOR_PLUGINS: |-
     retest
@@ -36,8 +39,10 @@ env:
   # This commands is for in the REVIEWERS environment variable
   REVIEWERS_PLUGINS: |-
     area
+    remove-area
     lgtm
     hold
+    unhold
   # This commands is for in the APPROVERS environment variable
   APPROVERS_PLUGINS: |-
     merge
@@ -46,7 +51,9 @@ env:
   # This commands is for in the MAINTAINERS environment variable
   MAINTAINERS_PLUGINS: |-
     milestone
+    remove-milestone
     priority
+    remove-priority
 
   # REVIEWERS: |-
   #   Xunzhuo
