@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for Envoy Gateway Helm Chart automation Release.
 
-## [v0.1.2] - 2023-03-01
+## [v0.1.3] - 2023-03-01
 
 ### All Changes
 
