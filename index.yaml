@@ -1,0 +1,25 @@
+apiVersion: v1
+entries:
+  eg:
+  - apiVersion: v3
+    appVersion: 0.3.0
+    created: "2023-03-01T08:59:34.081269714Z"
+    description: The Helm chart for Envoy Gateway.
+    digest: 1c5660c7add568ff18012d4ee57f3bfa7532638588931818e0d89ce4f22c43b5
+    home: https://gateway.envoyproxy.io/
+    keywords:
+    - gateway-api
+    - envoyproxy
+    - envoy-gateway
+    - eg
+    maintainers:
+    - name: envoy-gateway-maintainers
+      url: https://github.com/envoyproxy/gateway/blob/main/CODEOWNERS.md
+    name: eg
+    sources:
+    - https://github.com/envoyproxy/gateway
+    type: application
+    urls:
+    - https://github.com/Xunzhuo/gateway/releases/download/eg-helm-chart-0.1.0/eg-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-03-01T08:59:34.081602622Z"
