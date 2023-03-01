@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Release Process &#8212; Envoy Gateway  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Releases" href="../releases.html" />
+    <link rel="prev" title="Working on the Envoy Gateway Docs" href="DOCS.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="release-process">
+<h1>Release Process<a class="headerlink" href="#release-process" title="Permalink to this heading">¶</a></h1>
+<p>This document guides maintainers through the process of creating an Envoy Gateway release.</p>
+<section id="creating-a-minor-release">
+<h2>Creating a Minor Release<a class="headerlink" href="#creating-a-minor-release" title="Permalink to this heading">¶</a></h2>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Permissions to push to the Envoy Gateway repository.</p></li>
+</ul>
+<p>Set environment variables for use in subsequent steps:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">MAJOR_VERSION</span><span class="o">=</span><span class="m">0</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MINOR_VERSION</span><span class="o">=</span><span class="m">3</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GITHUB_REMOTE</span><span class="o">=</span>origin
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>Clone the repo, checkout the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, ensure it’s up-to-date, and your local branch is clean.</p></li>
+<li><p>Create a topic branch to create the release notes and release docs. Reference previous <a class="reference external" href="https://github.com/envoyproxy/gateway/tree/main/release-notes">release notes</a> for additional details.</p></li>
+<li><p>Sign, commit, and push your changes to your fork and submit a <a class="reference external" href="https://github.com/envoyproxy/gateway/pulls">Pull Request</a> to merge the changes listed below
+into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch. Do not proceed until all your PRs have merged and the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/build_and_test.yaml">Build and Test</a> has completed for your final PR:</p>
+<ol class="arabic simple">
+<li><p>Add Release Announcement.</p></li>
+<li><p>Add Release Versioned Documents.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">   </span>make<span class="w"> </span>docs-release<span class="w"> </span><span class="nv">TAG</span><span class="o">=</span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0
+</pre></div>
+</div>
+</li>
+<li><p>Create a new release branch from <code class="docutils literal notranslate"><span class="pre">main</span></code>. The release branch should be named
+<code class="docutils literal notranslate"><span class="pre">release/v${MAJOR_VERSION}.${MINOR_VERSION}</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">release/v0.3</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>release/v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Push the branch to the Envoy Gateway repo.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">GITHUB_REMOTE</span><span class="si">}</span><span class="w"> </span>release/v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Tag the head of your release branch with the release tag. For example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0<span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;Envoy Gateway v${MAJOR_VERSION}.${MINOR_VERSION}.0 Release&#39;</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> The tag version differs from the release branch by including the <code class="docutils literal notranslate"><span class="pre">.0</span></code> patch version.</p>
+</li>
+<li><p>Push the tag to the Envoy Gateway repository.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0
+</pre></div>
+</div>
+</li>
+<li><p>This will trigger the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/release.yaml">release GitHub action</a> that generates the release, release artifacts, etc.</p></li>
+<li><p>Confirm that the <a class="reference external" href="https://github.com/envoyproxy/gateway/actions/workflows/release.yaml">release workflow</a> completed successfully.</p></li>
+<li><p>Confirm that the Envoy Gateway <a class="reference external" href="https://hub.docker.com/r/envoyproxy/gateway/tags">image</a> with the correct release tag was published to Docker Hub.</p></li>
+<li><p>Confirm that the <a class="reference external" href="https://github.com/envoyproxy/gateway/releases">release</a> was created.</p></li>
+<li><p>Confirm that the steps in the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/docs/user/quickstart.md">Quickstart Guide</a> work as expected.</p></li>
+<li><p><a class="reference external" href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">Generate</a> the GitHub changelog and include the following text at the beginning of the release page:</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Release<span class="w"> </span>Announcement
+
+<span class="go">Check out the [v${MAJOR_VERSION}.${MINOR_VERSION} release announcement]</span>
+<span class="gp gp-VirtualEnv">(https://gateway.envoyproxy.io/releases/v${MAJOR_VERSION}.${MINOR_VERSION}.html)</span> <span class="go">to learn more about the release.</span>
+</pre></div>
+</div>
+<p>If you find any bugs in this process, please create an issue.</p>
+</section>
+</section>
+<section id="creating-a-release-candidate">
+<h2>Creating a Release Candidate<a class="headerlink" href="#creating-a-release-candidate" title="Permalink to this heading">¶</a></h2>
+<section id="rc-prerequisites">
+<h3>RC Prerequisites<a class="headerlink" href="#rc-prerequisites" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Permissions to push to the Envoy Gateway repository.</p></li>
+</ul>
+<p>Set environment variables for use in subsequent steps:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">MAJOR_VERSION</span><span class="o">=</span><span class="m">0</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MINOR_VERSION</span><span class="o">=</span><span class="m">3</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">RELEASE_CANDIDATE_NUMBER</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GITHUB_REMOTE</span><span class="o">=</span>origin
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>Clone the repo, checkout the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, ensure it’s up-to-date, and your local branch is clean.</p></li>
+<li><p>Tag the head of the main branch with the release candidate number.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0-rc.<span class="si">${</span><span class="nv">RELEASE_CANDIDATE_NUMBER</span><span class="si">}</span><span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;Envoy Gateway v${MAJOR_VERSION}.${MINOR_VERSION}.0-rc.${RELEASE_CANDIDATE_NUMBER} Release Candidate&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Push the tag to the Envoy Gateway repository.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0-rc.<span class="si">${</span><span class="nv">RELEASE_CANDIDATE_NUMBER</span><span class="si">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>This will trigger the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/release.yaml">release GitHub action</a> that generates the release, release artifacts, etc.</p></li>
+<li><p>Confirm that the <a class="reference external" href="https://github.com/envoyproxy/gateway/actions/workflows/release.yaml">release workflow</a> completed successfully.</p></li>
+<li><p>Confirm that the Envoy Gateway <a class="reference external" href="https://hub.docker.com/r/envoyproxy/gateway/tags">image</a> with the correct release tag was published to Docker Hub.</p></li>
+<li><p>Confirm that the <a class="reference external" href="https://github.com/envoyproxy/gateway/releases">release</a> was created.</p></li>
+<li><p>Note that the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/docs/user/quickstart.md">Quickstart Guide</a> references are <strong>not</strong> updated for release candidates. However, test
+the quickstart steps using the release candidate by manually updating the links.</p></li>
+<li><p><a class="reference external" href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">Generate</a> the GitHub changelog.</p></li>
+<li><p>Ensure you check the “This is a pre-release” checkbox when editing the GitHub release.</p></li>
+<li><p>If you find any bugs in this process, please create an issue.</p></li>
+</ol>
+</section>
+</section>
+<section id="announcing-the-release">
+<h2>Announcing the Release<a class="headerlink" href="#announcing-the-release" title="Permalink to this heading">¶</a></h2>
+<p>It’s important that the world knows about the release. Use the following steps to announce the release.</p>
+<ol class="arabic">
+<li><p>Set the release information in the Envoy Gateway Slack channel. For example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>Envoy<span class="w"> </span>Gateway<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>released:<span class="w"> </span>https://github.com/envoyproxy/gateway/releases/tag/v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.0
+</pre></div>
+</div>
+</li>
+<li><p>Send a message to the Envoy Gateway Slack channel. For example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>On<span class="w"> </span>behalf<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>entire<span class="w"> </span>Envoy<span class="w"> </span>Gateway<span class="w"> </span>community,<span class="w"> </span>I<span class="w"> </span>am<span class="w"> </span>pleased<span class="w"> </span>to<span class="w"> </span>announce<span class="w"> </span>the<span class="w"> </span>release<span class="w"> </span>of<span class="w"> </span>Envoy<span class="w"> </span>Gateway
+v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span>.<span class="w"> </span>A<span class="w"> </span>big<span class="w"> </span>thank<span class="w"> </span>you<span class="w"> </span>to<span class="w"> </span>all<span class="w"> </span>the<span class="w"> </span>contributors<span class="w"> </span>that<span class="w"> </span>made<span class="w"> </span>this<span class="w"> </span>release<span class="w"> </span>possible.
+Refer<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>official<span class="w"> </span>v<span class="si">${</span><span class="nv">MAJOR_VERSION</span><span class="si">}</span>.<span class="si">${</span><span class="nv">MINOR_VERSION</span><span class="si">}</span><span class="w"> </span>announcement<span class="w"> </span><span class="k">for</span><span class="w"> </span>release<span class="w"> </span>details<span class="w"> </span>and<span class="w"> </span>the<span class="w"> </span>project<span class="w"> </span>docs
+to<span class="w"> </span>start<span class="w"> </span>using<span class="w"> </span>Envoy<span class="w"> </span>Gateway.
+...
+</pre></div>
+</div>
+<p>Link to the GitHub release and release announcement page that highlights the release.</p>
+</li>
+</ol>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Envoy Gateway</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/compatibility.html">Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_docs.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_docs.html">Design Docs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../dev_docs.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_docs.html">About the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_involved.html">Getting Involved</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../dev_docs.html">Developer Docs</a><ul>
+      <li>Previous: <a href="DOCS.html" title="previous chapter">Working on the Envoy Gateway Docs</a></li>
+      <li>Next: <a href="../releases.html" title="next chapter">Releases</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Envoy Gateway Project Authors | <a href="https://github.com/envoyproxy/gateway">GitHub</a> | <a href="/latest">Latest Docs</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/dev/releasing.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

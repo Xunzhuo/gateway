@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Rate Limit Design &#8212; Envoy Gateway  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Request Authentication" href="request-authentication.html" />
+    <link rel="prev" title="Introduce egctl" href="egctl.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rate-limit-design">
+<h1>Rate Limit Design<a class="headerlink" href="#rate-limit-design" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>Rate limit is a feature that allows the user to limit the number of incoming requests
+to a predefined value based on attributes within the traffic flow.</p>
+<p>Here are some reasons why a user may want to implements Rate limits</p>
+<ul class="simple">
+<li><p>To prevent malicious activity such as DDoS attacks.</p></li>
+<li><p>To prevent applications and its resources (such as a database) from getting overloaded.</p></li>
+<li><p>To create API limits based on user entitlements.</p></li>
+</ul>
+</section>
+<section id="scope-types">
+<h2>Scope Types<a class="headerlink" href="#scope-types" title="Permalink to this heading">¶</a></h2>
+<p>The rate limit type here describes the scope of rate limits.</p>
+<ul class="simple">
+<li><p>Global - In this case, the rate limit is common across all the instances of Envoy proxies
+where its applied i.e. if the data plane has 2 replicas of Envoy running, and the rate limit is
+10 requests/second, this limit is common and will be hit if 5 requests pass through the first replica
+and 5 requests pass through the second replica within the same second.</p></li>
+<li><p>Local - In this case, the rate limits are specific to each instance/replica of Envoy running.
+Note - This is not part of the initial design and will be added as a future enhancement.</p></li>
+</ul>
+</section>
+<section id="match-types">
+<h2>Match Types<a class="headerlink" href="#match-types" title="Permalink to this heading">¶</a></h2>
+<section id="rate-limit-a-specific-traffic-flow">
+<h3>Rate limit a specific traffic flow<a class="headerlink" href="#rate-limit-a-specific-traffic-flow" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Here is an example of a ratelimit implemented by the application developer to limit a specific user
+by matching on a custom <code class="docutils literal notranslate"><span class="pre">x-user-id</span></code> header with a value set to <code class="docutils literal notranslate"><span class="pre">one</span></code></p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-specific-user</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Global</span>
+<span class="w">  </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">clientSelectors</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-user-id</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">one</span>
+<span class="w">      </span><span class="nt">limit</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hour</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg</span>
+<span class="w">  </span><span class="nt">hostnames</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matches</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PathPrefix</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/foo</span>
+<span class="w">    </span><span class="nt">filters</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtensionRef</span>
+<span class="w">      </span><span class="nt">extensionRef</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io</span>
+<span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-specific-user</span>
+<span class="w">    </span><span class="nt">backendRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+</pre></div>
+</div>
+</section>
+<section id="rate-limit-all-traffic-flows">
+<h3>Rate limit all traffic flows<a class="headerlink" href="#rate-limit-all-traffic-flows" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Here is an example of a rate limit implemented by the application developer that limits the total requests made
+to a specific route to safeguard health of internal application components. In this case, no specific <code class="docutils literal notranslate"><span class="pre">headers</span></code> match
+is specified, and the rate limit is applied to all traffic flows accepted by this <code class="docutils literal notranslate"><span class="pre">HTTPRoute</span></code>.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-all-requests</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Global</span>
+<span class="w">  </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">limit</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Second</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg</span>
+<span class="w">  </span><span class="nt">hostnames</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matches</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PathPrefix</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/foo</span>
+<span class="w">    </span><span class="nt">filters</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtensionRef</span>
+<span class="w">      </span><span class="nt">extensionRef</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io</span>
+<span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-all-requests</span>
+<span class="w">    </span><span class="nt">backendRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+</pre></div>
+</div>
+</section>
+<section id="rate-limit-per-distinct-value">
+<h3>Rate limit per distinct value<a class="headerlink" href="#rate-limit-per-distinct-value" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Here is an example of a rate limit implemented by the application developer to limit any unique user
+by matching on a custom <code class="docutils literal notranslate"><span class="pre">x-user-id</span></code> header. Here, user A (recognised from the traffic flow using the header
+<code class="docutils literal notranslate"><span class="pre">x-user-id</span></code> and value <code class="docutils literal notranslate"><span class="pre">a</span></code>) will be rate limited at 10 requests/hour and so will user B
+(recognised from the traffic flow using the header <code class="docutils literal notranslate"><span class="pre">x-user-id</span></code> and value <code class="docutils literal notranslate"><span class="pre">b</span></code>).</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-per-user</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Global</span>
+<span class="w">  </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">clientSelectors</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Distinct</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-user-id</span>
+<span class="w">      </span><span class="nt">limit</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hour</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eg</span>
+<span class="w">  </span><span class="nt">hostnames</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">www.example.com</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matches</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PathPrefix</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/foo</span>
+<span class="w">    </span><span class="nt">filters</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtensionRef</span>
+<span class="w">      </span><span class="nt">extensionRef</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io</span>
+<span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RateLimitFilter</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ratelimit-per-user</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">backendRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multiple-ratelimitfilters-rules-and-clientselectors">
+<h2>Multiple RateLimitFilters, rules and clientSelectors<a class="headerlink" href="#multiple-ratelimitfilters-rules-and-clientselectors" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Users can create multiple <code class="docutils literal notranslate"><span class="pre">RateLimitFilter</span></code>s and apply it to the same <code class="docutils literal notranslate"><span class="pre">HTTPRoute</span></code>. In such a case each
+<code class="docutils literal notranslate"><span class="pre">RateLimitFilter</span></code> will be applied to the route and matched (and limited) in a mutually exclusive way, independent of each other.</p></li>
+<li><p>Rate limits are applied for each <code class="docutils literal notranslate"><span class="pre">RateLimitFilter</span></code> <code class="docutils literal notranslate"><span class="pre">rule</span></code> when ALL the conditions under <code class="docutils literal notranslate"><span class="pre">clientSelectors</span></code> hold true.</p></li>
+</ul>
+<p>Here’s an example highlighting this -</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apiVersion</span><span class="p">:</span> <span class="n">gateway</span><span class="o">.</span><span class="n">envoyproxy</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v1alpha1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">RateLimitFilter</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">ratelimit</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">safeguard</span><span class="o">-</span><span class="n">app</span> 
+<span class="n">spec</span><span class="p">:</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">Global</span>
+  <span class="k">global</span><span class="p">:</span>
+    <span class="n">rules</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">limit</span><span class="p">:</span>
+        <span class="n">requests</span><span class="p">:</span> <span class="mi">100</span>
+        <span class="n">unit</span><span class="p">:</span> <span class="n">Second</span>
+<span class="o">---</span>
+
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">gateway</span><span class="o">.</span><span class="n">envoyproxy</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v1alpha1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">RateLimitFilter</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">ratelimit</span><span class="o">-</span><span class="n">per</span><span class="o">-</span><span class="n">user</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="n">Global</span>
+  <span class="k">global</span><span class="p">:</span>
+    <span class="n">rules</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">clientSelectors</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">headers</span><span class="p">:</span>
+        <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">Distinct</span>
+          <span class="n">name</span><span class="p">:</span> <span class="n">x</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="nb">id</span>
+      <span class="n">limit</span><span class="p">:</span>
+        <span class="n">requests</span><span class="p">:</span> <span class="mi">1000</span>
+        <span class="n">unit</span><span class="p">:</span> <span class="n">Hour</span>
+<span class="o">---</span>
+<span class="n">apiVersion</span><span class="p">:</span> <span class="n">gateway</span><span class="o">.</span><span class="n">networking</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v1beta1</span>
+<span class="n">kind</span><span class="p">:</span> <span class="n">HTTPRoute</span>
+<span class="n">metadata</span><span class="p">:</span>
+  <span class="n">name</span><span class="p">:</span> <span class="n">example</span>
+<span class="n">spec</span><span class="p">:</span>
+  <span class="n">parentRefs</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">eg</span>
+  <span class="n">hostnames</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+  <span class="n">rules</span><span class="p">:</span>
+  <span class="o">-</span> <span class="n">matches</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">path</span><span class="p">:</span>
+        <span class="nb">type</span><span class="p">:</span> <span class="n">PathPrefix</span>
+        <span class="n">value</span><span class="p">:</span> <span class="o">/</span><span class="n">foo</span>
+    <span class="n">filters</span><span class="p">:</span>
+    <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">ExtensionRef</span>
+      <span class="n">extensionRef</span><span class="p">:</span>
+        <span class="n">group</span><span class="p">:</span> <span class="n">gateway</span><span class="o">.</span><span class="n">envoyproxy</span><span class="o">.</span><span class="n">io</span>
+        <span class="n">kind</span><span class="p">:</span> <span class="n">RateLimitFilter</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">ratelimit</span><span class="o">-</span><span class="n">per</span><span class="o">-</span><span class="n">user</span>
+    <span class="o">-</span> <span class="nb">type</span><span class="p">:</span> <span class="n">ExtensionRef</span>
+      <span class="n">extensionRef</span><span class="p">:</span>
+        <span class="n">group</span><span class="p">:</span> <span class="n">gateway</span><span class="o">.</span><span class="n">envoyproxy</span><span class="o">.</span><span class="n">io</span>
+        <span class="n">kind</span><span class="p">:</span> <span class="n">RateLimitFilter</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">ratelimit</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">safeguard</span><span class="o">-</span><span class="n">app</span>
+    <span class="n">backendRefs</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">backend</span>
+      <span class="n">port</span><span class="p">:</span> <span class="mi">3000</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The user has created two <code class="docutils literal notranslate"><span class="pre">RateLimitFilter</span></code>s  and has attached it to a <code class="docutils literal notranslate"><span class="pre">HTTPRoute</span></code> - one(<code class="docutils literal notranslate"><span class="pre">ratelimit-all-safeguard-app</span></code>) to
+ensure that the backend does not get overwhelmed with requests, any excess requests are rate limited irrespective of
+the attributes within the traffic flow, and another(<code class="docutils literal notranslate"><span class="pre">ratelimit-per-user</span></code>) to rate limit each distinct user client
+who can be differentiated using the <code class="docutils literal notranslate"><span class="pre">x-user-id</span></code> header, to ensure that each client does not make exessive requests to the backend.</p></li>
+<li><p>If user <code class="docutils literal notranslate"><span class="pre">baz</span></code> (identified with the header and value of <code class="docutils literal notranslate"><span class="pre">x-user-id:</span> <span class="pre">baz</span></code>) sends 90 requests within the first second, and
+user <code class="docutils literal notranslate"><span class="pre">bar</span></code> sends 11 more requests during that same interval of 1 second, and user <code class="docutils literal notranslate"><span class="pre">bar</span></code> sends the 101th request within that second,
+the rule defined in <code class="docutils literal notranslate"><span class="pre">ratelimit-all-safeguard-app</span></code> gets activated and Envoy Gateway will ratelimit the request sent by <code class="docutils literal notranslate"><span class="pre">bar</span></code> (and any other
+request sent within that 1 second). After 1 second, the rate limit counter associated with the <code class="docutils literal notranslate"><span class="pre">ratelimit-all-safeguard-app</span></code> rule
+is reset and again evaluated.</p></li>
+<li><p>If user <code class="docutils literal notranslate"><span class="pre">bar</span></code> also ends up sending 90 more requests within the hour, summing up <code class="docutils literal notranslate"><span class="pre">bar</span></code>’s total request count to 101, the rate limit rule
+defined within <code class="docutils literal notranslate"><span class="pre">ratelimit-per-user</span></code> will get activated, and <code class="docutils literal notranslate"><span class="pre">bar</span></code>’s requests will be rate limited again until the hour interval ends.</p></li>
+<li><p>Within the same above hour, if <code class="docutils literal notranslate"><span class="pre">baz</span></code> sends 991 more requests, summing up <code class="docutils literal notranslate"><span class="pre">baz</span></code>’s total request count to 1001, the rate limit rule defined
+within <code class="docutils literal notranslate"><span class="pre">ratelimit-per-user</span></code> will get activated for <code class="docutils literal notranslate"><span class="pre">baz</span></code>, and <code class="docutils literal notranslate"><span class="pre">baz</span></code>’s requests will also be rate limited until the hour interval ends.</p></li>
+</ul>
+</section>
+<section id="design-decisions">
+<h2>Design Decisions<a class="headerlink" href="#design-decisions" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>The initial design uses an Extension filter to apply the Rate Limit functionality on a specific <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute">HTTPRoute</a>.
+This was preferred over the <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/policy-attachment/">PolicyAttachment</a> extension mechanism, because it is unclear whether Rate Limit
+will be required to be enforced or overridden by the platform administrator or not.</p></li>
+<li><p>The RateLimitFilter can only be applied as a filter to a [HTTPRouteRule[], applying it across all backends within a <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute">HTTPRoute</a>
+and cannot be applied a filter within a <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1beta1.HTTPBackendRef">HTTPBackendRef</a> for a specific backend.</p></li>
+<li><p>The <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute">HTTPRoute</a> API has a <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRouteMatch">matches</a> field within each <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRouteMatch">rule</a> to select a specific traffic flow to be routed to
+the destination backend. The RateLimitFilter API that can be attached to an HTTPRoute via an <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRouteFilterType">extensionRef</a> filter,
+also has a <code class="docutils literal notranslate"><span class="pre">clientSelectors</span></code> field within each <code class="docutils literal notranslate"><span class="pre">rule</span></code> to select attributes within the traffic flow to rate limit specific clients.
+The two levels of selectors/matches allow for flexibility and aim to hold match information specific to its use, allowing the author/owner
+of each configuration to be different. It also allows the <code class="docutils literal notranslate"><span class="pre">clientSelectors</span></code> field within the RateLimitFilter to be enhanced with other matchable
+attribute such as <a class="reference external" href="https://en.wikipedia.org/wiki/Subnetwork">IP subnet</a> in the future that are not relevant in the <a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute">HTTPRoute</a> API.</p></li>
+</ul>
+</section>
+<section id="implementation-details">
+<h2>Implementation Details<a class="headerlink" href="#implementation-details" title="Permalink to this heading">¶</a></h2>
+<section id="global-rate-limiting">
+<h3>Global Rate limiting<a class="headerlink" href="#global-rate-limiting" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_features/global_rate_limiting">Global rate limiting</a> in Envoy Proxy can be achieved using the following -</p>
+<ul>
+<li><p><a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto#envoy-v3-api-msg-config-route-v3-ratelimit-action">Actions</a> can be conifgured per <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto#envoy-v3-api-msg-config-route-v3-routeaction">xDS Route</a>.</p></li>
+<li><p>If the match criteria defined within these actions is met for a specific HTTP Request, a set of key value pairs called <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/rate_limit_filter.html?highlight=descriptor#example-1">descriptors</a>
+defined within the above actions is sent to a remote <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/configuration/other_features/rate_limit#config-rate-limit-service">rate limit service</a>, whose configuration (such as the URL for the rate limit service) is defined
+using a <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/http/ratelimit/v3/rate_limit.proto#envoy-v3-api-msg-extensions-filters-http-ratelimit-v3-ratelimit">rate limit filter</a>.</p></li>
+<li><p>Based on information received by the rate limit service and its programmed configuration, a decision is computed, whether to rate limit
+the HTTP Request or not, and is sent back to Envoy, which enforces this decision on the data plane.</p></li>
+</ul>
+</li>
+<li><p>Envoy Gateway will leverage this Envoy Proxy feature by -</p>
+<ul>
+<li><p>Translating the user facing RateLimitFilter API into Rate limit <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto#envoy-v3-api-msg-config-route-v3-ratelimit-action">Actions</a> as well as Rate limit service configuration to implement
+the desired API intent.</p></li>
+<li><p>Envoy Gateway will use the existing <a class="reference external" href="https://github.com/envoyproxy/ratelimit">reference implementation</a> of the rate limit service.</p>
+<ul>
+<li><p>The Infrastructure administrator will need to enable the rate limit service using new settings that will be defined in the <a class="reference external" href="https://github.com/envoyproxy/gateway/blob/main/api/config/v1alpha1/envoygateway_types.go">EnvoyGateway</a> config API.</p></li>
+</ul>
+</li>
+<li><p>The xDS IR will be enhanced to hold the user facing rate limit intent.</p></li>
+<li><p>The xDS Translator will be enhanced to translate the rate limit field within the xDS IR into Rate limit <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto#envoy-v3-api-msg-config-route-v3-ratelimit-action">Actions</a> as well as instantiate the <a class="reference external" href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/http/ratelimit/v3/rate_limit.proto#envoy-v3-api-msg-extensions-filters-http-ratelimit-v3-ratelimit">rate limit filter</a>.</p></li>
+<li><p>A new runner called <code class="docutils literal notranslate"><span class="pre">rate-limit</span></code> will be added that subscribes to the xDS IR messages and translates it into a new Rate Limit Infra IR which contains
+the <a class="reference external" href="https://github.com/envoyproxy/ratelimit#configuration">rate limit service configuration</a> as well as other information needed to deploy the rate limit service.</p></li>
+<li><p>The infrastructure service will be enhanced to subscribe to the Rate Limit Infra IR and deploy a provider specific rate limit service runnable entity.</p></li>
+<li><p>A Status field within the RateLimitFilter API will be added to reflect whether the specific configuration was programmed correctly in these multiple locations or not.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Envoy Gateway</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/compatibility.html">Compatibility Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_docs.html">User Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../design_docs.html">Design Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_docs.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_docs.html">API Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_docs.html">About the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_involved.html">Getting Involved</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../design_docs.html">Design Docs</a><ul>
+      <li>Previous: <a href="egctl.html" title="previous chapter">Introduce egctl</a></li>
+      <li>Next: <a href="request-authentication.html" title="next chapter">Request Authentication</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Envoy Gateway Project Authors | <a href="https://github.com/envoyproxy/gateway">GitHub</a> | <a href="/latest">Latest Docs</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/design/ratelimit.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

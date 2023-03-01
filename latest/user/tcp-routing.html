@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>TCP Routing &#8212; Envoy Gateway  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="UDP Routing" href="udp-routing.html" />
+    <link rel="prev" title="TLS Passthrough" href="tls-passthrough.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="tcp-routing">
+<h1>TCP Routing<a class="headerlink" href="#tcp-routing" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1alpha2.TCPRoute">TCPRoute</a> provides a way to route TCP requests. When combined with a Gateway listener, it can be used to forward
+connections on the port specified by the listener to a set of backends specified by the TCPRoute. To learn more about
+HTTP routing, refer to the <a class="reference external" href="https://gateway-api.sigs.k8s.io/">Gateway API documentation</a>.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>Install Envoy Gateway:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/envoyproxy/gateway/releases/download/latest/install.yaml
+</pre></div>
+</div>
+<p>Wait for Envoy Gateway to become available:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--timeout<span class="o">=</span>5m<span class="w"> </span>-n<span class="w"> </span>envoy-gateway-system<span class="w"> </span>deployment/envoy-gateway<span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Available
+</pre></div>
+</div>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
+<p>In this example, we have one Gateway resource and two TCPRoute resources that distribute the traffic with the following
+rules:</p>
+<p>All TCP streams on port <code class="docutils literal notranslate"><span class="pre">8088</span></code> of the Gateway are forwarded to port 3001 of <code class="docutils literal notranslate"><span class="pre">foo</span></code> Kubernetes Service.
+All TCP streams on port <code class="docutils literal notranslate"><span class="pre">8089</span></code> of the Gateway are forwarded to port 3002 of <code class="docutils literal notranslate"><span class="pre">bar</span></code> Kubernetes Service.
+In this example two TCP listeners will be applied to the Gateway in order to route them to two separate backend
+TCPRoutes, note that the protocol set for the listeners on the Gateway is TCP:</p>
+<p>Install the GatewayClass and a <code class="docutils literal notranslate"><span class="pre">tcp-gateway</span></code> Gateway first.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">kind: GatewayClass</span>
+<span class="s">apiVersion: gateway.networking.k8s.io/v1beta1</span>
+<span class="s">metadata:</span>
+<span class="s">  name: eg</span>
+<span class="s">spec:</span>
+<span class="s">  controllerName: gateway.envoyproxy.io/gatewayclass-controller</span>
+<span class="s">---</span>
+<span class="s">apiVersion: gateway.networking.k8s.io/v1beta1</span>
+<span class="s">kind: Gateway</span>
+<span class="s">metadata:</span>
+<span class="s">  name: tcp-gateway</span>
+<span class="s">spec:</span>
+<span class="s">  gatewayClassName: eg</span>
+<span class="s">  listeners:</span>
+<span class="s">  - name: foo</span>
+<span class="s">    protocol: TCP</span>
+<span class="s">    port: 8088</span>
+<span class="s">    allowedRoutes:</span>
+<span class="s">      kinds:</span>
+<span class="s">      - kind: TCPRoute</span>
+<span class="s">  - name: bar</span>
+<span class="s">    protocol: TCP</span>
+<span class="s">    port: 8089</span>
+<span class="s">    allowedRoutes:</span>
+<span class="s">      kinds:</span>
+<span class="s">      - kind: TCPRoute</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>Install two services <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code>, which are binded to <code class="docutils literal notranslate"><span class="pre">backend-1</span></code> and <code class="docutils literal notranslate"><span class="pre">backend-2</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Service</span>
+<span class="s">metadata:</span>
+<span class="s">  name: foo</span>
+<span class="s">  labels:</span>
+<span class="s">    app: backend-1</span>
+<span class="s">spec:</span>
+<span class="s">  ports:</span>
+<span class="s">    - name: http</span>
+<span class="s">      port: 3001</span>
+<span class="s">      targetPort: 3000</span>
+<span class="s">  selector:</span>
+<span class="s">    app: backend-1</span>
+<span class="s">---</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Service</span>
+<span class="s">metadata:</span>
+<span class="s">  name: bar</span>
+<span class="s">  labels:</span>
+<span class="s">    app: backend-2</span>
+<span class="s">spec:</span>
+<span class="s">  ports:</span>
+<span class="s">    - name: http</span>
+<span class="s">      port: 3002</span>
+<span class="s">      targetPort: 3000</span>
+<span class="s">  selector:</span>
+<span class="s">    app: backend-2</span>
+<span class="s">---</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: Deployment</span>
+<span class="s">metadata:</span>
+<span class="s">  name: backend-1</span>
+<span class="s">spec:</span>
+<span class="s">  replicas: 1</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      app: backend-1</span>
+<span class="s">      version: v1</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        app: backend-1</span>
+<span class="s">        version: v1</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">        - image: gcr.io/k8s-staging-ingressconformance/echoserver:v20221109-7ee2f3e</span>
+<span class="s">          imagePullPolicy: IfNotPresent</span>
+<span class="s">          name: backend-1</span>
+<span class="s">          ports:</span>
+<span class="s">            - containerPort: 3000</span>
+<span class="s">          env:</span>
+<span class="s">            - name: POD_NAME</span>
+<span class="s">              valueFrom:</span>
+<span class="s">                fieldRef:</span>
+<span class="s">                  fieldPath: metadata.name</span>
+<span class="s">            - name: NAMESPACE</span>
+<span class="s">              valueFrom:</span>
+<span class="s">                fieldRef:</span>
+<span class="s">                  fieldPath: metadata.namespace</span>
+<span class="s">            - name: SERVICE_NAME</span>
+<span class="s">              value: foo</span>
+<span class="s">---</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: Deployment</span>
+<span class="s">metadata:</span>
+<span class="s">  name: backend-2</span>
+<span class="s">spec:</span>
+<span class="s">  replicas: 1</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      app: backend-2</span>
+<span class="s">      version: v1</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        app: backend-2</span>
+<span class="s">        version: v1</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">        - image: gcr.io/k8s-staging-ingressconformance/echoserver:v20221109-7ee2f3e</span>
+<span class="s">          imagePullPolicy: IfNotPresent</span>
+<span class="s">          name: backend-2</span>
+<span class="s">          ports:</span>
+<span class="s">            - containerPort: 3000</span>
+<span class="s">          env:</span>
+<span class="s">            - name: POD_NAME</span>
+<span class="s">              valueFrom:</span>
+<span class="s">                fieldRef:</span>
+<span class="s">                  fieldPath: metadata.name</span>
+<span class="s">            - name: NAMESPACE</span>
+<span class="s">              valueFrom:</span>
+<span class="s">                fieldRef:</span>
+<span class="s">                  fieldPath: metadata.namespace</span>
+<span class="s">            - name: SERVICE_NAME</span>
+<span class="s">              value: bar</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>Install two TCPRoutes <code class="docutils literal notranslate"><span class="pre">tcp-app-1</span></code> and <code class="docutils literal notranslate"><span class="pre">tcp-app-2</span></code> with different <code class="docutils literal notranslate"><span class="pre">sectionName</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: gateway.networking.k8s.io/v1alpha2</span>
+<span class="s">kind: TCPRoute</span>
+<span class="s">metadata:</span>
+<span class="s">  name: tcp-app-1</span>
+<span class="s">spec:</span>
+<span class="s">  parentRefs:</span>
+<span class="s">  - name: tcp-gateway</span>
+<span class="s">    sectionName: foo</span>
+<span class="s">  rules:</span>
+<span class="s">  - backendRefs:</span>
+<span class="s">    - name: foo</span>
+<span class="s">      port: 3001</span>
+<span class="s">---</span>
+<span class="s">apiVersion: gateway.networking.k8s.io/v1alpha2</span>
+<span class="s">kind: TCPRoute</span>
+<span class="s">metadata:</span>
+<span class="s">  name: tcp-app-2</span>
+<span class="s">spec:</span>
+<span class="s">  parentRefs:</span>
+<span class="s">  - name: tcp-gateway</span>
+<span class="s">    sectionName: bar</span>
+<span class="s">  rules:</span>
+<span class="s">  - backendRefs:</span>
+<span class="s">    - name: bar</span>
+<span class="s">      port: 3002</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>In the above example we separate the traffic for the two separate backend TCP Services by using the sectionName field in
+the parentRefs:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tcp-gateway</span>
+<span class="w">    </span><span class="nt">sectionName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
+</pre></div>
+</div>
+<p>This corresponds directly with the name in the listeners in the Gateway:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">listeners</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8088</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8089</span>
+</pre></div>
+</div>
+<p>In this way each TCPRoute “attaches” itself to a different port on the Gateway so that the <code class="docutils literal notranslate"><span class="pre">foo</span></code> service
+is taking traffic for port <code class="docutils literal notranslate"><span class="pre">8088</span></code> from outside the cluster and <code class="docutils literal notranslate"><span class="pre">bar</span></code> service takes the port <code class="docutils literal notranslate"><span class="pre">8089</span></code> traffic.</p>
+<p>Before testing, please get the tcp-gateway Gateway’s address first:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">GATEWAY_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>gateway/tcp-gateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.addresses[0].value}&#39;</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>You can try to use nc to test the TCP connections of envoy gateway with different ports, and you can see them succeeded:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-zv<span class="w"> </span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span><span class="w"> </span><span class="m">8088</span>
+
+nc<span class="w"> </span>-zv<span class="w"> </span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span><span class="w"> </span><span class="m">8089</span>
+</pre></div>
+</div>
+<p>You can also try to send requests to envoy gateway and get responses as shown below:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;http://</span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span><span class="s2">:8088&quot;</span>
+
+HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+Content-Type:<span class="w"> </span>application/json
+X-Content-Type-Options:<span class="w"> </span>nosniff
+Date:<span class="w"> </span>Tue,<span class="w"> </span><span class="m">03</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">10</span>:18:36<span class="w"> </span>GMT
+Content-Length:<span class="w"> </span><span class="m">267</span>
+
+<span class="o">{</span>
+<span class="w"> </span><span class="s2">&quot;path&quot;</span>:<span class="w"> </span><span class="s2">&quot;/&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;host&quot;</span>:<span class="w"> </span><span class="s2">&quot;xxx.xxx.xxx.xxx:8088&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;method&quot;</span>:<span class="w"> </span><span class="s2">&quot;GET&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;proto&quot;</span>:<span class="w"> </span><span class="s2">&quot;HTTP/1.1&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;headers&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;Accept&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">   </span><span class="s2">&quot;*/*&quot;</span>
+<span class="w">  </span><span class="o">]</span>,
+<span class="w">  </span><span class="s2">&quot;User-Agent&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">   </span><span class="s2">&quot;curl/7.85.0&quot;</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="w"> </span><span class="o">}</span>,
+<span class="w"> </span><span class="s2">&quot;namespace&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;ingress&quot;</span>:<span class="w"> </span><span class="s2">&quot;&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;service&quot;</span>:<span class="w"> </span><span class="s2">&quot;foo&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;pod&quot;</span>:<span class="w"> </span><span class="s2">&quot;backend-1-c6c5fb958-dl8vl&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>You can see that the traffic routing to <code class="docutils literal notranslate"><span class="pre">foo</span></code> service when sending request to <code class="docutils literal notranslate"><span class="pre">8088</span></code> port.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;http://</span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span><span class="s2">:8089&quot;</span>
+
+HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+Content-Type:<span class="w"> </span>application/json
+X-Content-Type-Options:<span class="w"> </span>nosniff
+Date:<span class="w"> </span>Tue,<span class="w"> </span><span class="m">03</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">10</span>:19:28<span class="w"> </span>GMT
+Content-Length:<span class="w"> </span><span class="m">267</span>
+
+<span class="o">{</span>
+<span class="w"> </span><span class="s2">&quot;path&quot;</span>:<span class="w"> </span><span class="s2">&quot;/&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;host&quot;</span>:<span class="w"> </span><span class="s2">&quot;xxx.xxx.xxx.xxx:8089&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;method&quot;</span>:<span class="w"> </span><span class="s2">&quot;GET&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;proto&quot;</span>:<span class="w"> </span><span class="s2">&quot;HTTP/1.1&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;headers&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;Accept&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">   </span><span class="s2">&quot;*/*&quot;</span>
+<span class="w">  </span><span class="o">]</span>,
+<span class="w">  </span><span class="s2">&quot;User-Agent&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">   </span><span class="s2">&quot;curl/7.85.0&quot;</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="w"> </span><span class="o">}</span>,
+<span class="w"> </span><span class="s2">&quot;namespace&quot;</span>:<span class="w"> </span><span class="s2">&quot;default&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;ingress&quot;</span>:<span class="w"> </span><span class="s2">&quot;&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;service&quot;</span>:<span class="w"> </span><span class="s2">&quot;bar&quot;</span>,
+<span class="w"> </span><span class="s2">&quot;pod&quot;</span>:<span class="w"> </span><span class="s2">&quot;backend-2-98fcff498-hcmgb&quot;</span>
+<span class="o">}</span><span class="w">                                            </span>
+</pre></div>
+</div>
+<p>You can see that the traffic routing to <code class="docutils literal notranslate"><span class="pre">bar</span></code> service when sending request to <code class="docutils literal notranslate"><span class="pre">8089</span></code> port.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Envoy Gateway</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/compatibility.html">Compatibility Matrix</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user_docs.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_docs.html">Design Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_docs.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_docs.html">API Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_docs.html">About the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_involved.html">Getting Involved</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../user_docs.html">User Guides</a><ul>
+      <li>Previous: <a href="tls-passthrough.html" title="previous chapter">TLS Passthrough</a></li>
+      <li>Next: <a href="udp-routing.html" title="next chapter">UDP Routing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Envoy Gateway Project Authors | <a href="https://github.com/envoyproxy/gateway">GitHub</a> | <a href="/latest">Latest Docs</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/user/tcp-routing.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

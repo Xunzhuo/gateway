@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Request Authentication &#8212; Envoy Gateway  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Rate limit" href="rate-limit.html" />
+    <link rel="prev" title="GRPC Routing" href="grpc-routing.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="request-authentication">
+<h1>Request Authentication<a class="headerlink" href="#request-authentication" title="Permalink to this heading">¶</a></h1>
+<p>This guide provides instructions for configuring <a class="reference external" href="https://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)</a> authentication. JWT authentication checks
+if an incoming request has a valid JWT before routing the request to a backend service. Currently, Envoy Gateway only
+supports validating a JWT from an HTTP header, e.g. <code class="docutils literal notranslate"><span class="pre">Authorization:</span> <span class="pre">Bearer</span> <span class="pre">&lt;token&gt;</span></code>.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>Follow the steps from the <a class="reference internal" href="quickstart.html"><span class="doc std std-doc">Quickstart</span></a> guide to install Envoy Gateway and the example manifest.
+Before proceeding, you should be able to query the example backend using HTTP.</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
+<p>Allow requests with a valid JWT by creating an <a class="reference external" href="https://gateway.envoyproxy.io/v0.3.0/api/extension_types.html#authenticationfilter">AuthenticationFilter</a> and referencing it from the example HTTPRoute.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/envoyproxy/gateway/v0.3.0/examples/kubernetes/authn/jwt.yaml
+</pre></div>
+</div>
+<p>The HTTPRoute is now updated to authenticate requests for <code class="docutils literal notranslate"><span class="pre">/foo</span></code> and allow unauthenticated requests to <code class="docutils literal notranslate"><span class="pre">/bar</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">/foo</span></code> route rule references an AuthenticationFilter that provides the JWT authentication configuration.</p>
+<p>Verify the HTTPRoute configuration and status:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>httproute/backend<span class="w"> </span>-o<span class="w"> </span>yaml
+</pre></div>
+</div>
+<p>The AuthenticationFilter is configured for JWT authentication and uses a single <a class="reference external" href="https://tools.ietf.org/html/rfc7517">JSON Web Key Set (JWKS)</a>
+provider for authenticating the JWT.</p>
+<p>Verify the AuthenticationFilter configuration:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>authenticationfilter/jwt-example<span class="w"> </span>-o<span class="w"> </span>yaml
+</pre></div>
+</div>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">¶</a></h2>
+<p>Ensure the <code class="docutils literal notranslate"><span class="pre">GATEWAY_HOST</span></code> environment variable from the <a class="reference internal" href="quickstart.html"><span class="doc std std-doc">Quickstart</span></a> guide is set. If not, follow the
+Quickstart instructions to set the variable.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$GATEWAY_HOST</span>
+</pre></div>
+</div>
+<p>Verify that requests to <code class="docutils literal notranslate"><span class="pre">/foo</span></code> are denied without a JWT:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-sS<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: www.example.com&quot;</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}\n&quot;</span><span class="w"> </span>http://<span class="nv">$GATEWAY_HOST</span>/foo
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">401</span></code> HTTP response code should be returned.</p>
+<p>Get the JWT used for testing request authentication:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>https://raw.githubusercontent.com/envoyproxy/gateway/main/examples/kubernetes/authn/test.jwt<span class="w"> </span>-s<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;.&#39;</span><span class="w"> </span>-f2<span class="w"> </span>-<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode<span class="w"> </span>-
+</pre></div>
+</div>
+<p><strong>Note:</strong> The above command decodes and returns the token’s payload. You can replace <code class="docutils literal notranslate"><span class="pre">f2</span></code> with <code class="docutils literal notranslate"><span class="pre">f1</span></code> to view the token’s
+header.</p>
+<p>Verify that a request to <code class="docutils literal notranslate"><span class="pre">/foo</span></code> with a valid JWT is allowed:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-sS<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: www.example.com&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}\n&quot;</span><span class="w"> </span>http://<span class="nv">$GATEWAY_HOST</span>/foo
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">200</span></code> HTTP response code should be returned.</p>
+<p>Verify that requests to <code class="docutils literal notranslate"><span class="pre">/bar</span></code> are allowed <strong>without</strong> a JWT:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-sS<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: www.example.com&quot;</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;%{http_code}\n&quot;</span><span class="w"> </span>http://<span class="nv">$GATEWAY_HOST</span>/bar
+</pre></div>
+</div>
+</section>
+<section id="clean-up">
+<h2>Clean-Up<a class="headerlink" href="#clean-up" title="Permalink to this heading">¶</a></h2>
+<p>Follow the steps from the <a class="reference internal" href="quickstart.html"><span class="doc std std-doc">Quickstart</span></a> guide to uninstall Envoy Gateway and the example manifest.</p>
+<p>Delete the AuthenticationFilter:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>delete<span class="w"> </span>authenticationfilter/jwt-example
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>Checkout the <a class="reference internal" href="../dev/README.html"><span class="doc std std-doc">Developer Guide</span></a> to get involved in the project.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Envoy Gateway</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/compatibility.html">Compatibility Matrix</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user_docs.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_docs.html">Design Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_docs.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_docs.html">API Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_docs.html">About the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_involved.html">Getting Involved</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../user_docs.html">User Guides</a><ul>
+      <li>Previous: <a href="grpc-routing.html" title="previous chapter">GRPC Routing</a></li>
+      <li>Next: <a href="rate-limit.html" title="next chapter">Rate limit</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Envoy Gateway Project Authors | <a href="https://github.com/envoyproxy/gateway">GitHub</a> | <a href="/latest">Latest Docs</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/user/authn.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

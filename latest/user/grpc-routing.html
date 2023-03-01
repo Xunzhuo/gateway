@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>GRPC Routing &#8212; Envoy Gateway  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Request Authentication" href="authn.html" />
+    <link rel="prev" title="UDP Routing" href="udp-routing.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="grpc-routing">
+<h1>GRPC Routing<a class="headerlink" href="#grpc-routing" title="Permalink to this heading">¶</a></h1>
+<p>The <a class="reference external" href="https://gateway-api.sigs.k8s.io/api-types/grpcroute/">GRPCRoute</a> resource allows users to configure gRPC routing by matching HTTP/2 traffic and forwarding it to backend gRPC servers.
+To learn more about gRPC routing, refer to the <a class="reference external" href="https://gateway-api.sigs.k8s.io/">Gateway API documentation</a>.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h2>
+<p>Install Envoy Gateway:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/envoyproxy/gateway/releases/download/latest/install.yaml
+</pre></div>
+</div>
+<p>Wait for Envoy Gateway to become available:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--timeout<span class="o">=</span>5m<span class="w"> </span>-n<span class="w"> </span>envoy-gateway-system<span class="w"> </span>deployment/envoy-gateway<span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Available
+</pre></div>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>Install the gRPC routing example resources:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/envoyproxy/gateway/latest/examples/kubernetes/grpc-routing.yaml
+</pre></div>
+</div>
+<p>The manifest installs a <a class="reference external" href="https://gateway-api.sigs.k8s.io/api-types/gatewayclass/">GatewayClass</a>, <a class="reference external" href="https://gateway-api.sigs.k8s.io/api-types/gateway/">Gateway</a>, a Deployment, a Service, and a GRPCRoute resource.
+The GatewayClass is a cluster-scoped resource that represents a class of Gateways that can be instantiated.</p>
+<p><strong>Note:</strong> Envoy Gateway is configured by default to manage a GatewayClass with
+<code class="docutils literal notranslate"><span class="pre">controllerName:</span> <span class="pre">gateway.envoyproxy.io/gatewayclass-controller</span></code>.</p>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Permalink to this heading">¶</a></h2>
+<p>Check the status of the GatewayClass:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>gc<span class="w"> </span>--selector<span class="o">=</span><span class="nv">example</span><span class="o">=</span>grpc-routing
+</pre></div>
+</div>
+<p>The status should reflect “Accepted=True”, indicating Envoy Gateway is managing the GatewayClass.</p>
+<p>A Gateway represents configuration of infrastructure. When a Gateway is created, <a class="reference external" href="https://www.envoyproxy.io/">Envoy proxy</a> infrastructure is
+provisioned or configured by Envoy Gateway. The <code class="docutils literal notranslate"><span class="pre">gatewayClassName</span></code> defines the name of a GatewayClass used by this
+Gateway. Check the status of the Gateway:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>gateways<span class="w"> </span>--selector<span class="o">=</span><span class="nv">example</span><span class="o">=</span>grpc-routing
+</pre></div>
+</div>
+<p>The status should reflect “Ready=True”, indicating the Envoy proxy infrastructure has been provisioned. The status also
+provides the address of the Gateway. This address is used later in the guide to test connectivity to proxied backend
+services.</p>
+<p>Check the status of the GRPCRoute:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>grpcroutes<span class="w"> </span>--selector<span class="o">=</span><span class="nv">example</span><span class="o">=</span>grpc-routing<span class="w"> </span>-o<span class="w"> </span>yaml
+</pre></div>
+</div>
+<p>The status for the GRPCRoute should surface “Accepted=True” and a <code class="docutils literal notranslate"><span class="pre">parentRef</span></code> that references the example Gateway.
+The <code class="docutils literal notranslate"><span class="pre">example-route</span></code> matches any traffic for “grpc-example.com” and forwards it to the “yages” Service.</p>
+</section>
+<section id="testing-the-configuration">
+<h2>Testing the Configuration<a class="headerlink" href="#testing-the-configuration" title="Permalink to this heading">¶</a></h2>
+<p>Before testing GRPC routing to the <code class="docutils literal notranslate"><span class="pre">yages</span></code> backend, get the Gateway’s address.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">GATEWAY_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>gateway/example-gateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.addresses[0].value}&#39;</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>Test GRPC routing to the <code class="docutils literal notranslate"><span class="pre">yages</span></code> backend using the <a class="reference external" href="https://github.com/fullstorydev/grpcurl">grpcurl</a> command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span>-authority<span class="o">=</span>grpc-example.com<span class="w"> </span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span>:80<span class="w"> </span>yages.Echo/Ping
+</pre></div>
+</div>
+<p>You should see the below response</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;text&quot;</span>:<span class="w"> </span><span class="s2">&quot;pong&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Envoy Gateway also supports <a class="reference external" href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md#protocol-differences-vs-grpc-over-http2">gRPC-Web</a> requests for this configuration. The below <code class="docutils literal notranslate"><span class="pre">curl</span></code> command can be used to send a grpc-Web request with over HTTP/2. You should receive the same response seen in the previous command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>--http2-prior-knowledge<span class="w"> </span>-s<span class="w"> </span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span>:80/yages.Echo/Ping<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Host: grpc-example.com&#39;</span><span class="w">   </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/grpc-web-text&#39;</span><span class="w">   </span>-H<span class="w"> </span><span class="s1">&#39;Accept: application/grpc-web-text&#39;</span><span class="w"> </span>-XPOST<span class="w"> </span>-d<span class="s1">&#39;AAAAAAA=&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
+</pre></div>
+</div>
+</section>
+<section id="grpcroute-match">
+<h2>GRPCRoute Match<a class="headerlink" href="#grpcroute-match" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">matches</span></code> field can be used to restrict the route to a specific set of requests based on GRPC’s service and/or method names.
+The following example shows how to match a request based on the service and method names for <code class="docutils literal notranslate"><span class="pre">grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo</span></code>,
+as well as a match for all services with a method name <code class="docutils literal notranslate"><span class="pre">Ping</span></code> which matches <code class="docutils literal notranslate"><span class="pre">yages.Echo/Ping</span></code> in our deployment.</p>
+<p>Current implementation supports only <code class="docutils literal notranslate"><span class="pre">Exact</span></code> match. <code class="docutils literal notranslate"><span class="pre">RegularExpression</span></code> match will be supported after https://github.com/kubernetes-sigs/gateway-api/issues/1746 is resolved.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: gateway.networking.k8s.io/v1alpha2</span>
+<span class="s">kind: GRPCRoute</span>
+<span class="s">metadata:</span>
+<span class="s">  name: yages</span>
+<span class="s">  labels:</span>
+<span class="s">    example: grpc-routing</span>
+<span class="s">spec:</span>
+<span class="s">  parentRefs:</span>
+<span class="s">    - name: example-gateway</span>
+<span class="s">  hostnames:</span>
+<span class="s">    - &quot;grpc-example.com&quot;</span>
+<span class="s">  rules:</span>
+<span class="s">    - matches:</span>
+<span class="s">      - method:</span>
+<span class="s">          method: ServerReflectionInfo</span>
+<span class="s">          service: grpc.reflection.v1alpha.ServerReflection</span>
+<span class="s">      - method:</span>
+<span class="s">          method: Ping</span>
+<span class="s">      backendRefs:</span>
+<span class="s">        - group: &quot;&quot;</span>
+<span class="s">          kind: Service</span>
+<span class="s">          name: yages</span>
+<span class="s">          port: 9000</span>
+<span class="s">          weight: 1</span>
+<span class="s">EOF</span>
+</pre></div>
+</div>
+<p>Verify the GRPCRoute status:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>kubectl<span class="w"> </span>get<span class="w"> </span>grpcroutes<span class="w"> </span>--selector<span class="o">=</span><span class="nv">example</span><span class="o">=</span>grpc-routing<span class="w"> </span>-o<span class="w"> </span>yaml
+</pre></div>
+</div>
+<p>Test GRPC routing to the <code class="docutils literal notranslate"><span class="pre">yages</span></code> backend using the <a class="reference external" href="https://github.com/fullstorydev/grpcurl">grpcurl</a> command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span>-authority<span class="o">=</span>grpc-example.com<span class="w"> </span><span class="si">${</span><span class="nv">GATEWAY_HOST</span><span class="si">}</span>:80<span class="w"> </span>yages.Echo/Ping
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Envoy Gateway</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/compatibility.html">Compatibility Matrix</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user_docs.html">User Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design_docs.html">Design Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_docs.html">Developer Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_docs.html">API Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about_docs.html">About the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_involved.html">Getting Involved</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../user_docs.html">User Guides</a><ul>
+      <li>Previous: <a href="udp-routing.html" title="previous chapter">UDP Routing</a></li>
+      <li>Next: <a href="authn.html" title="next chapter">Request Authentication</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;Envoy Gateway Project Authors | <a href="https://github.com/envoyproxy/gateway">GitHub</a> | <a href="/latest">Latest Docs</a>.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/user/grpc-routing.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
