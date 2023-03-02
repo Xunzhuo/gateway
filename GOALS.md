@@ -24,6 +24,7 @@ This expressive API will not be implemented by Envoy Proxy, but rather an offici
 on top.
 
 ### Batteries included
+
 Envoy Gateway will simplify how Envoy is deployed and managed, allowing application developers to focus on
 delivering core business value.
 
