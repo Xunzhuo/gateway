@@ -39,6 +39,7 @@ will enjoy a simplified management model that doesn't require extensive knowledg
 operate.
 
 ### All environments
+
 Envoy Gateway will support running natively in Kubernetes environments as well as non-Kubernetes deployments.
 
 Initially, Kubernetes will receive the most focus, with the aim of having Envoy Gateway become the de facto
