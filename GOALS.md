@@ -8,6 +8,7 @@ fundamental interactions.
 ## Objectives
 
 ### Expressive API
+
 The Envoy Gateway project will expose a simple and expressive API, with defaults set for many capabilities.
 
 The API will be the Kubernetes-native [Gateway API][], plus Envoy-specific extensions and extension points.  This
