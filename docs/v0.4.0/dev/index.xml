@@ -1,0 +1,588 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Envoy Gateway – Development</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/</link><description>Recent content in Development on Envoy Gateway</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Community Code of Conduct</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/code_of_conduct/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/code_of_conduct/</guid><description>
+&lt;p>Gateway follows the &lt;a href="https://github.com/cncf/foundation/blob/main/code-of-conduct.md">CNCF Code of Conduct&lt;/a>.&lt;/p></description></item><item><title>Docs: Contributing</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/contributing/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/contributing/</guid><description>
+&lt;p>We welcome contributions from the community. Please carefully review the &lt;a href="GOALS.md">project goals&lt;/a>
+and following guidelines to streamline your contributions.&lt;/p>
+&lt;h2 id="communication">Communication&lt;/h2>
+&lt;ul>
+&lt;li>Before starting work on a major feature, please contact us via GitHub or Slack. We will ensure no
+one else is working on it and ask you to open a GitHub issue.&lt;/li>
+&lt;li>A &amp;ldquo;major feature&amp;rdquo; is defined as any change that is &amp;gt; 100 LOC altered (not including tests), or
+changes any user-facing behavior. We will use the GitHub issue to discuss the feature and come to
+agreement. This is to prevent your time being wasted, as well as ours. The GitHub review process
+for major features is also important so that &lt;a href="CODEOWNERS.md">affiliations with commit access&lt;/a> can
+come to agreement on the design. If it&amp;rsquo;s appropriate to write a design document, the document must
+be hosted either in the GitHub issue, or linked to from the issue and hosted in a world-readable
+location.&lt;/li>
+&lt;li>Small patches and bug fixes don&amp;rsquo;t need prior communication.&lt;/li>
+&lt;/ul>
+&lt;h2 id="inclusivity">Inclusivity&lt;/h2>
+&lt;p>The Envoy Gateway community has an explicit goal to be inclusive to all. As such, all PRs must adhere
+to the following guidelines for all code, APIs, and documentation:&lt;/p>
+&lt;ul>
+&lt;li>The following words and phrases are not allowed:
+&lt;ul>
+&lt;li>&lt;em>Whitelist&lt;/em>: use allowlist instead.&lt;/li>
+&lt;li>&lt;em>Blacklist&lt;/em>: use denylist or blocklist instead.&lt;/li>
+&lt;li>&lt;em>Master&lt;/em>: use primary instead.&lt;/li>
+&lt;li>&lt;em>Slave&lt;/em>: use secondary or replica instead.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Documentation should be written in an inclusive style. The &lt;a href="https://developers.google.com/style/inclusive-documentation">Google developer
+documentation&lt;/a> contains an excellent
+reference on this topic.&lt;/li>
+&lt;li>The above policy is not considered definitive and may be amended in the future as industry best
+practices evolve. Additional comments on this topic may be provided by maintainers during code
+review.&lt;/li>
+&lt;/ul>
+&lt;h2 id="submitting-a-pr">Submitting a PR&lt;/h2>
+&lt;ul>
+&lt;li>Fork the repo.&lt;/li>
+&lt;li>Hack&lt;/li>
+&lt;li>DCO sign-off each commit. This can be done with &lt;code>git commit -s&lt;/code>.&lt;/li>
+&lt;li>Submit your PR.&lt;/li>
+&lt;li>Tests will automatically run for you.&lt;/li>
+&lt;li>We will &lt;strong>not&lt;/strong> merge any PR that is not passing tests.&lt;/li>
+&lt;li>PRs are expected to have 100% test coverage for added code. This can be verified with a coverage
+build. If your PR cannot have 100% coverage for some reason please clearly explain why when you
+open it.&lt;/li>
+&lt;li>Any PR that changes user-facing behavior &lt;strong>must&lt;/strong> have associated documentation in the &lt;a href="https://github.com/envoyproxy/gateway/tree/main/docs">docs&lt;/a> folder of the repo as
+well as the &lt;a href="../releases">changelog&lt;/a>.&lt;/li>
+&lt;li>All code comments and documentation are expected to have proper English grammar and punctuation.
+If you are not a fluent English speaker (or a bad writer ;-)) please let us know and we will try
+to find some help but there are no guarantees.&lt;/li>
+&lt;li>Your PR title should be descriptive, and generally start with type that contains a subsystem name with &lt;code>()&lt;/code> if necessary
+and summary followed by a colon. format &lt;code>chore/docs/feat/fix/refactor/style/test: summary&lt;/code>.
+Examples:
+&lt;ul>
+&lt;li>&amp;ldquo;docs: fix grammar error&amp;rdquo;&lt;/li>
+&lt;li>&amp;ldquo;feat(translator): add new feature&amp;rdquo;&lt;/li>
+&lt;li>&amp;ldquo;fix: fix xx bug&amp;rdquo;&lt;/li>
+&lt;li>&amp;ldquo;chore: change ci &amp;amp; build tools etc&amp;rdquo;&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Your PR commit message will be used as the commit message when your PR is merged. You should
+update this field if your PR diverges during review.&lt;/li>
+&lt;li>Your PR description should have details on what the PR does. If it fixes an existing issue it
+should end with &amp;ldquo;Fixes #XXX&amp;rdquo;.&lt;/li>
+&lt;li>If your PR is co-authored or based on an earlier PR from another contributor,
+please attribute them with &lt;code>Co-authored-by: name &amp;lt;name@example.com&amp;gt;&lt;/code>. See
+GitHub&amp;rsquo;s &lt;a href="https://help.github.com/en/github/committing-changes-to-your-project/creating-a-commit-with-multiple-authors">multiple author
+guidance&lt;/a>
+for further details.&lt;/li>
+&lt;li>When all tests are passing and all other conditions described herein are satisfied, a maintainer
+will be assigned to review and merge the PR.&lt;/li>
+&lt;li>Once you submit a PR, &lt;em>please do not rebase it&lt;/em>. It&amp;rsquo;s much easier to review if subsequent commits
+are new commits and/or merges. We squash and merge so the number of commits you have in the PR
+doesn&amp;rsquo;t matter.&lt;/li>
+&lt;li>We expect that once a PR is opened, it will be actively worked on until it is merged or closed.
+We reserve the right to close PRs that are not making progress. This is generally defined as no
+changes for 7 days. Obviously PRs that are closed due to lack of activity can be reopened later.
+Closing stale PRs helps us to keep on top of all the work currently in flight.&lt;/li>
+&lt;/ul>
+&lt;h2 id="maintainer-pr-review-policy">Maintainer PR Review Policy&lt;/h2>
+&lt;ul>
+&lt;li>See &lt;a href="CODEOWNERS.md">CODEOWNERS.md&lt;/a> for the current list of maintainers.&lt;/li>
+&lt;li>A maintainer representing a different affiliation from the PR owner is required to review and
+approve the PR.&lt;/li>
+&lt;li>When the project matures, it is expected that a &amp;ldquo;domain expert&amp;rdquo; for the code the PR touches should
+review the PR. This person does not require commit access, just domain knowledge.&lt;/li>
+&lt;li>The above rules may be waived for PRs which only update docs or comments, or trivial changes to
+tests and tools (where trivial is decided by the maintainer in question).&lt;/li>
+&lt;li>If there is a question on who should review a PR please discuss in Slack.&lt;/li>
+&lt;li>Anyone is welcome to review any PR that they want, whether they are a maintainer or not.&lt;/li>
+&lt;li>Please make sure that the PR title, commit message, and description are updated if the PR changes
+significantly during review.&lt;/li>
+&lt;li>Please &lt;strong>clean up the title and body&lt;/strong> before merging. By default, GitHub fills the squash merge
+title with the original title, and the commit body with every individual commit from the PR.
+The maintainer doing the merge should make sure the title follows the guidelines above and should
+overwrite the body with the original commit message from the PR (cleaning it up if necessary)
+while preserving the PR author&amp;rsquo;s final DCO sign-off.&lt;/li>
+&lt;/ul>
+&lt;h2 id="decision-making">Decision making&lt;/h2>
+&lt;p>This is a new and complex project, and we need to make a lot of decisions very quickly.
+To this end, we&amp;rsquo;ve settled on this process for making (possibly contentious) decisions:&lt;/p>
+&lt;ul>
+&lt;li>For decisions that need a record, we create an issue.&lt;/li>
+&lt;li>In that issue, we discuss opinions, then a maintainer can call for a vote in a comment.&lt;/li>
+&lt;li>Maintainers can cast binding votes on that comment by reacting or replying in another comment.&lt;/li>
+&lt;li>Non-maintainer community members are welcome to cast non-binding votes by either of these methods.&lt;/li>
+&lt;li>Voting will be resolved by simple majority.&lt;/li>
+&lt;li>In the event of deadlocks, the question will be put to steering instead.&lt;/li>
+&lt;/ul>
+&lt;h2 id="dco-sign-your-work">DCO: Sign your work&lt;/h2>
+&lt;p>The sign-off is a simple line at the end of the explanation for the
+patch, which certifies that you wrote it or otherwise have the right to
+pass it on as an open-source patch. The rules are pretty simple: if you
+can certify the below (from
+&lt;a href="https://developercertificate.org/">developercertificate.org&lt;/a>):&lt;/p>
+&lt;pre tabindex="0">&lt;code>Developer Certificate of Origin
+Version 1.1
+Copyright (C) 2004, 2006 The Linux Foundation and its contributors.
+660 York Street, Suite 102,
+San Francisco, CA 94110 USA
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
+Developer&amp;#39;s Certificate of Origin 1.1
+By making a contribution to this project, I certify that:
+(a) The contribution was created in whole or in part by me and I
+have the right to submit it under the open source license
+indicated in the file; or
+(b) The contribution is based upon previous work that, to the best
+of my knowledge, is covered under an appropriate open source
+license and I have the right under that license to submit that
+work with modifications, whether created in whole or in part
+by me, under the same open source license (unless I am
+permitted to submit under a different license), as indicated
+in the file; or
+(c) The contribution was provided directly to me by some other
+person who certified (a), (b) or (c) and I have not modified
+it.
+(d) I understand and agree that this project and the contribution
+are public and that a record of the contribution (including all
+personal information I submit with it, including my sign-off) is
+maintained indefinitely and may be redistributed consistent with
+this project or the open source license(s) involved.
+&lt;/code>&lt;/pre>&lt;p>then you just add a line to every git commit message:&lt;/p>
+&lt;pre>&lt;code>Signed-off-by: Joe Smith &amp;lt;joe@gmail.com&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>using your real name (sorry, no pseudonyms or anonymous contributions.)&lt;/p>
+&lt;p>You can add the sign-off when creating the git commit via &lt;code>git commit -s&lt;/code>.&lt;/p>
+&lt;p>If you want this to be automatic you can set up some aliases:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git config --add alias.amend &lt;span style="color:#4e9a06">&amp;#34;commit -s --amend&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git config --add alias.c &lt;span style="color:#4e9a06">&amp;#34;commit -s&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="fixing-dco">Fixing DCO&lt;/h2>
+&lt;p>If your PR fails the DCO check, it&amp;rsquo;s necessary to fix the entire commit history in the PR. Best
+practice is to &lt;a href="https://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html">squash&lt;/a>
+the commit history to a single commit, append the DCO sign-off as described above, and &lt;a href="https://git-scm.com/docs/git-push#git-push---force">force
+push&lt;/a>. For example, if you have 2 commits in
+your history:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git rebase -i HEAD^^
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>interactive squash + DCO append&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin -f
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note, that in general rewriting history in this way is a hindrance to the review process and this
+should only be done to correct a DCO mistake.&lt;/p></description></item><item><title>Docs: Developer Guide</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/readme/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/readme/</guid><description>
+&lt;p>Envoy Gateway is built using a &lt;a href="https://www.gnu.org/software/make/">make&lt;/a>-based build system. Our CI is based on &lt;a href="https://docs.github.com/en/actions">Github Actions&lt;/a> using &lt;a href="https://github.com/envoyproxy/gateway/tree/main/.github/workflows">workflows&lt;/a>.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;h3 id="go">go&lt;/h3>
+&lt;ul>
+&lt;li>Version: 1.20&lt;/li>
+&lt;li>Installation Guide: &lt;a href="https://go.dev/doc/install">https://go.dev/doc/install&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="make">make&lt;/h3>
+&lt;ul>
+&lt;li>Recommended Version: 4.0 or later&lt;/li>
+&lt;li>Installation Guide: &lt;a href="https://www.gnu.org/software/make">https://www.gnu.org/software/make&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="docker">docker&lt;/h3>
+&lt;ul>
+&lt;li>Optional when you want to build a Docker image or run &lt;code>make&lt;/code> inside Docker.&lt;/li>
+&lt;li>Recommended Version: 20.10.16&lt;/li>
+&lt;li>Installation Guide: &lt;a href="https://docs.docker.com/engine/install">https://docs.docker.com/engine/install&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="python3">python3&lt;/h3>
+&lt;ul>
+&lt;li>Need a &lt;code>python3&lt;/code> program&lt;/li>
+&lt;li>Must have a functioning &lt;code>venv&lt;/code> module; this is part of the standard
+library, but some distributions (such as Debian and Ubuntu) replace
+it with a stub and require you to install a &lt;code>python3-venv&lt;/code> package
+separately.&lt;/li>
+&lt;/ul>
+&lt;h2 id="quickstart">Quickstart&lt;/h2>
+&lt;ul>
+&lt;li>Run &lt;code>make help&lt;/code> to see all the available targets to build, test and run Envoy Gateway.&lt;/li>
+&lt;/ul>
+&lt;h3 id="building">Building&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>make build&lt;/code> to build all the binaries.&lt;/li>
+&lt;li>Run &lt;code>make build BINS=&amp;quot;envoy-gateway&amp;quot;&lt;/code> to build the Envoy Gateway binary.&lt;/li>
+&lt;li>Run &lt;code>make build BINS=&amp;quot;egctl&amp;quot;&lt;/code> to build the egctl binary.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Note:&lt;/strong> The binaries get generated in the &lt;code>bin/$OS/$ARCH&lt;/code> directory, for example, &lt;code>bin/linux/amd64/&lt;/code>.&lt;/p>
+&lt;h3 id="testing">Testing&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>make test&lt;/code> to run the golang tests.&lt;/li>
+&lt;/ul>
+&lt;h3 id="running-linters">Running Linters&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>make lint&lt;/code> to make sure your code passes all the linter checks.&lt;/li>
+&lt;/ul>
+&lt;h3 id="building-and-pushing-the-image">Building and Pushing the Image&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>IMAGE=docker.io/you/gateway-dev make image&lt;/code> to build the docker image.&lt;/li>
+&lt;li>Run &lt;code>IMAGE=docker.io/you/gateway-dev make push-multiarch&lt;/code> to build and push the multi-arch docker image.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Note:&lt;/strong> Replace &lt;code>IMAGE&lt;/code> with your registry&amp;rsquo;s image name.&lt;/p>
+&lt;h3 id="deploying-envoy-gateway-for-testdev">Deploying Envoy Gateway for Test/Dev&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>make create-cluster&lt;/code> to create a &lt;a href="https://kind.sigs.k8s.io/">Kind&lt;/a> cluster.&lt;/li>
+&lt;/ul>
+&lt;h4 id="option-1-use-the-latest-gateway-dev-image">Option 1: Use the Latest &lt;a href="https://hub.docker.com/r/envoyproxy/gateway-dev/tags">gateway-dev&lt;/a> Image&lt;/h4>
+&lt;ul>
+&lt;li>Run &lt;code>TAG=latest make kube-deploy&lt;/code> to deploy Envoy Gateway in the Kind cluster using the latest image. Replace &lt;code>latest&lt;/code>
+to use a different image tag.&lt;/li>
+&lt;/ul>
+&lt;h4 id="option-2-use-a-custom-image">Option 2: Use a Custom Image&lt;/h4>
+&lt;ul>
+&lt;li>Run &lt;code>make kube-install-image&lt;/code> to build an image from the tip of your current branch and load it in the Kind cluster.&lt;/li>
+&lt;li>Run &lt;code>make kube-deploy&lt;/code> to install Envoy Gateway into the Kind cluster using your custom image.&lt;/li>
+&lt;/ul>
+&lt;h3 id="deploying-envoy-gateway-in-kubernetes">Deploying Envoy Gateway in Kubernetes&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>TAG=latest make kube-deploy&lt;/code> to deploy Envoy Gateway using the latest image into a Kubernetes cluster (linked to
+the current kube context). Preface the command with &lt;code>IMAGE&lt;/code> or replace &lt;code>TAG&lt;/code> to use a different Envoy Gateway image or
+tag.&lt;/li>
+&lt;li>Run &lt;code>make kube-undeploy&lt;/code> to uninstall Envoy Gateway from the cluster.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Note:&lt;/strong> Envoy Gateway is tested against Kubernetes v1.24.0.&lt;/p>
+&lt;h3 id="demo-setup">Demo Setup&lt;/h3>
+&lt;ul>
+&lt;li>Run &lt;code>make kube-demo&lt;/code> to deploy a demo backend service, gatewayclass, gateway and httproute resource
+(similar to steps outlined in the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/docs/user/quickstart.md">Quickstart&lt;/a> docs) and test the configuration.&lt;/li>
+&lt;li>Run &lt;code>make kube-demo-undeploy&lt;/code> to delete the resources created by the &lt;code>make kube-demo&lt;/code> command.&lt;/li>
+&lt;/ul>
+&lt;h3 id="run-gateway-api-conformance-tests">Run Gateway API Conformance Tests&lt;/h3>
+&lt;p>The commands below deploy Envoy Gateway to a Kubernetes cluster and run the Gateway API conformance tests. Refer to the
+Gateway API &lt;a href="https://gateway-api.sigs.k8s.io/concepts/conformance/">conformance homepage&lt;/a> to learn more about the tests. If Envoy Gateway is already installed, run
+&lt;code>TAG=latest make run-conformance&lt;/code> to run the conformance tests.&lt;/p>
+&lt;h4 id="on-a-linux-host">On a Linux Host&lt;/h4>
+&lt;ul>
+&lt;li>Run &lt;code>TAG=latest make conformance&lt;/code> to create a Kind cluster, install Envoy Gateway using the latest &lt;a href="https://hub.docker.com/r/envoyproxy/gateway-dev/tags">gateway-dev&lt;/a>
+image, and run Gateway API conformance tests.&lt;/li>
+&lt;/ul>
+&lt;h4 id="on-a-mac-host">On a Mac Host&lt;/h4>
+&lt;p>Since Mac doesn&amp;rsquo;t support &lt;a href="https://kind.sigs.k8s.io/docs/user/loadbalancer/">directly exposing&lt;/a> the Docker network to the Mac host, use one of the following
+workarounds to run conformance tests:&lt;/p>
+&lt;ul>
+&lt;li>Deploy your own Kubernetes cluster or use Docker Desktop with &lt;a href="https://docs.docker.com/desktop/kubernetes/">Kubernetes support&lt;/a> and then run
+&lt;code>TAG=latest make kube-deploy run-conformance&lt;/code>. This will install Envoy Gateway using the latest &lt;a href="https://hub.docker.com/r/envoyproxy/gateway-dev/tags">gateway-dev&lt;/a> image
+to the Kubernetes cluster using the current kubectl context and run the conformance tests. Use &lt;code>make kube-undeploy&lt;/code> to
+uninstall Envoy Gateway.&lt;/li>
+&lt;li>Install and run &lt;a href="https://github.com/chipmk/docker-mac-net-connect">Docker Mac Net Connect&lt;/a> and then run &lt;code>TAG=latest make conformance&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Note:&lt;/strong> Preface commands with &lt;code>IMAGE&lt;/code> or replace &lt;code>TAG&lt;/code> to use a different Envoy Gateway image or tag. If &lt;code>TAG&lt;/code>
+is unspecified, the short SHA of your current branch is used.&lt;/p>
+&lt;h3 id="debugging-the-envoy-config">Debugging the Envoy Config&lt;/h3>
+&lt;p>An easy way to view the envoy config that Envoy Gateway is using is to port-forward to the admin interface port
+(currently &lt;code>19000&lt;/code>) on the Envoy deployment that corresponds to a Gateway so that it can be accessed locally.&lt;/p>
+&lt;p>Get the name of the Envoy deployment. The following example is for Gateway &lt;code>eg&lt;/code> in the &lt;code>default&lt;/code> namespace:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">ENVOY_DEPLOYMENT&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#204a87;font-weight:bold">$(&lt;/span>kubectl get deploy -n envoy-gateway-system --selector&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>gateway.envoyproxy.io/owning-gateway-namespace&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>default,gateway.envoyproxy.io/owning-gateway-name&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>eg -o &lt;span style="color:#000">jsonpath&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#39;{.items[0].metadata.name}&amp;#39;&lt;/span>&lt;span style="color:#204a87;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Port forward the admin interface port:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl port-forward deploy/&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">ENVOY_DEPLOYMENT&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> -n envoy-gateway-system 19000:19000
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now you are able to view the running Envoy configuration by navigating to &lt;code>127.0.0.1:19000/config_dump&lt;/code>.&lt;/p>
+&lt;p>There are many other endpoints on the &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/operations/admin#operations-admin-interface">Envoy admin interface&lt;/a> that may be helpful when debugging.&lt;/p>
+&lt;h3 id="jwt-testing">JWT Testing&lt;/h3>
+&lt;p>An example &lt;a href="https://tools.ietf.org/html/rfc7519">JSON Web Token (JWT)&lt;/a> and &lt;a href="https://tools.ietf.org/html/rfc7517">JSON Web Key Set (JWKS)&lt;/a> are used for the &lt;a href="https://gateway.envoyproxy.io/latest/user/authn.html">request authentication&lt;/a>
+user guide. The JWT was created by the &lt;a href="https://jwt.io/">JWT Debugger&lt;/a>, using the &lt;code>RS256&lt;/code> algorithm. The public key from the JWTs
+verify signature was copied to &lt;a href="https://russelldavies.github.io/jwk-creator/">JWK Creator&lt;/a> for generating the JWK. The JWK Creator was configured with matching
+settings, i.e. &lt;code>Signing&lt;/code> public key use and the &lt;code>RS256&lt;/code> algorithm. The generated JWK was wrapped in a JWKS structure
+and is hosted in the repo.&lt;/p></description></item><item><title>Docs: Goals</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/goals/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/goals/</guid><description>
+&lt;p>The high-level goal of the Envoy Gateway project is to attract more users to Envoy by lowering barriers to adoption
+through expressive, extensible, role-oriented APIs that support a multitude of ingress and L7/L4 traffic routing
+use cases; and provide a common foundation for vendors to build value-added products without having to re-engineer
+fundamental interactions.&lt;/p>
+&lt;h2 id="objectives">Objectives&lt;/h2>
+&lt;h3 id="expressive-api">Expressive API&lt;/h3>
+&lt;p>The Envoy Gateway project will expose a simple and expressive API, with defaults set for many capabilities.&lt;/p>
+&lt;p>The API will be the Kubernetes-native &lt;a href="https://gateway-api.sigs.k8s.io/">Gateway API&lt;/a>, plus Envoy-specific extensions and extension points. This
+expressive and familiar API will make Envoy accessible to more users, especially application developers, and make Envoy
+a stronger option for &amp;ldquo;getting started&amp;rdquo; as compared to other proxies. Application developers will use the API out of
+the box without needing to understand in-depth concepts of Envoy Proxy or use OSS wrappers. The API will use familiar
+nouns that &lt;a href="#personas">users&lt;/a> understand.&lt;/p>
+&lt;p>The core full-featured Envoy xDS APIs will remain available for those who need more capability and for those who
+add functionality on top of Envoy Gateway, such as commercial API gateway products.&lt;/p>
+&lt;p>This expressive API will not be implemented by Envoy Proxy, but rather an officially supported translation layer
+on top.&lt;/p>
+&lt;h3 id="batteries-included">Batteries included&lt;/h3>
+&lt;p>Envoy Gateway will simplify how Envoy is deployed and managed, allowing application developers to focus on
+delivering core business value.&lt;/p>
+&lt;p>The project plans to include additional infrastructure components required by users to fulfill their Ingress and API
+gateway needs: It will handle Envoy infrastructure provisioning (e.g. Kubernetes Service, Deployment, et cetera), and
+possibly infrastructure provisioning of related sidecar services. It will include sensible defaults with the ability to
+override. It will include channels for improving ops by exposing status through API conditions and Kubernetes status
+sub-resources.&lt;/p>
+&lt;p>Making an application accessible needs to be a trivial task for any developer. Similarly, infrastructure administrators
+will enjoy a simplified management model that doesn&amp;rsquo;t require extensive knowledge of the solution&amp;rsquo;s architecture to
+operate.&lt;/p>
+&lt;h3 id="all-environments">All environments&lt;/h3>
+&lt;p>Envoy Gateway will support running natively in Kubernetes environments as well as non-Kubernetes deployments.&lt;/p>
+&lt;p>Initially, Kubernetes will receive the most focus, with the aim of having Envoy Gateway become the de facto
+standard for Kubernetes ingress supporting the &lt;a href="https://gateway-api.sigs.k8s.io/">Gateway API&lt;/a>.
+Additional goals include multi-cluster support and various runtime environments.&lt;/p>
+&lt;h3 id="extensibility">Extensibility&lt;/h3>
+&lt;p>Vendors will have the ability to provide value-added products built on the Envoy Gateway foundation.&lt;/p>
+&lt;p>It will remain easy for end-users to leverage common Envoy Proxy extension points such as providing an implementation
+for authentication methods and rate-limiting. For advanced use cases, users will have the ability to use the full power
+of xDS.&lt;/p>
+&lt;p>Since a general-purpose API cannot address all use cases, Envoy Gateway will provide additional extension points
+for flexibility. As such, Envoy Gateway will form the base of vendor-provided managed control plane solutions,
+allowing vendors to shift to a higher management plane layer.&lt;/p>
+&lt;h2 id="non-objectives">Non-objectives&lt;/h2>
+&lt;h3 id="cannibalize-vendor-models">Cannibalize vendor models&lt;/h3>
+&lt;p>Vendors need to have the ability to drive commercial value, so the goal is not to cannibalize any existing vendor
+monetization model, though some vendors may be affected by it.&lt;/p>
+&lt;h3 id="disrupt-current-envoy-usage-patterns">Disrupt current Envoy usage patterns&lt;/h3>
+&lt;p>Envoy Gateway is purely an additive convenience layer and is not meant to disrupt any usage pattern of any user
+with Envoy Proxy, xDS, or go-control-plane.&lt;/p>
+&lt;h2 id="personas">Personas&lt;/h2>
+&lt;p>&lt;em>In order of priority&lt;/em>&lt;/p>
+&lt;h3 id="1-application-developer">1. Application developer&lt;/h3>
+&lt;p>The application developer spends the majority of their time developing business logic code. They require the ability to
+manage access to their application.&lt;/p>
+&lt;h3 id="2-infrastructure-administrators">2. Infrastructure administrators&lt;/h3>
+&lt;p>The infrastructure administrators are responsible for the installation, maintenance, and operation of
+API gateways appliances in infrastructure, such as CRDs, roles, service accounts, certificates, etc.
+Infrastructure administrators support the needs of application developers by managing instances of Envoy Gateway.&lt;/p></description></item><item><title>Docs: Maintainers</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/codeowners/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/codeowners/</guid><description>
+&lt;h2 id="the-following-maintainers-listed-in-alphabetical-order-own-everything">The following maintainers, listed in alphabetical order, own everything&lt;/h2>
+&lt;ul>
+&lt;li>@AliceProxy&lt;/li>
+&lt;li>@arkodg&lt;/li>
+&lt;li>@skriss&lt;/li>
+&lt;li>@Xunzhuo&lt;/li>
+&lt;li>@youngnick&lt;/li>
+&lt;li>@zirain&lt;/li>
+&lt;/ul>
+&lt;h2 id="emeritus-maintainers">Emeritus Maintainers&lt;/h2>
+&lt;ul>
+&lt;li>@danehans&lt;/li>
+&lt;li>@alexgervais&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Release Process</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/releasing/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/releasing/</guid><description>
+&lt;p>This document guides maintainers through the process of creating an Envoy Gateway release.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#release-candidate">Release Candidate&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#minor-release">Minor Release&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#announce-the-release">Announce the Release&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="release-candidate">Release Candidate&lt;/h2>
+&lt;p>The following steps should be used for creating a release candidate.&lt;/p>
+&lt;h3 id="prerequisites">Prerequisites&lt;/h3>
+&lt;ul>
+&lt;li>Permissions to push to the Envoy Gateway repository.&lt;/li>
+&lt;/ul>
+&lt;p>Set environment variables for use in subsequent steps:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">RELEASE_CANDIDATE_NUMBER&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">GITHUB_REMOTE&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>origin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>
+&lt;p>Clone the repo, checkout the &lt;code>main&lt;/code> branch, ensure it’s up-to-date, and your local branch is clean.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create a topic branch for adding the release notes and updating the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/VERSION">VERSION&lt;/a> file with the release version. Refer to previous &lt;a href="https://github.com/envoyproxy/gateway/tree/main/release-notes">release notes&lt;/a> and &lt;a href="https://github.com/envoyproxy/gateway/blob/main/VERSION">VERSION&lt;/a> for additional details.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Sign, commit, and push your changes to your fork.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Submit a &lt;a href="https://github.com/envoyproxy/gateway/pulls">Pull Request&lt;/a> to merge the changes into the &lt;code>main&lt;/code> branch. Do not proceed until your PR has merged and
+the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/build_and_test.yaml">Build and Test&lt;/a> has successfully completed.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create a new release branch from &lt;code>main&lt;/code>. The release branch should be named
+&lt;code>release/v${MAJOR_VERSION}.${MINOR_VERSION}&lt;/code>, e.g. &lt;code>release/v0.3&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git checkout -b release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Push the branch to the Envoy Gateway repo.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git push &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">GITHUB_REMOTE&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Create a topic branch for updating the Envoy proxy image to the tag supported by the release. Reference &lt;a href="https://github.com/envoyproxy/gateway/pull/958">PR #958&lt;/a>
+for additional details on updating the image tag.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Sign, commit, and push your changes to your fork.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Submit a &lt;a href="https://github.com/envoyproxy/gateway/pulls">Pull Request&lt;/a> to merge the changes into the &lt;code>release/v${MAJOR_VERSION}.${MINOR_VERSION}&lt;/code> branch. Do not
+proceed until your PR has merged into the release branch and the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/build_and_test.yaml">Build and Test&lt;/a> has completed for your PR.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Ensure your release branch is up-to-date and tag the head of your release branch with the release candidate number.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git tag -a v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.0-rc.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">RELEASE_CANDIDATE_NUMBER&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> -m &lt;span style="color:#4e9a06">&amp;#39;Envoy Gateway v${MAJOR_VERSION}.${MINOR_VERSION}.0-rc.${RELEASE_CANDIDATE_NUMBER} Release Candidate&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Push the tag to the Envoy Gateway repository.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git push &lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">GITHUB_REMOTE&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.0-rc.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">RELEASE_CANDIDATE_NUMBER&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>This will trigger the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/release.yaml">release GitHub action&lt;/a> that generates the release, release artifacts, etc.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the &lt;a href="https://github.com/envoyproxy/gateway/actions/workflows/release.yaml">release workflow&lt;/a> completed successfully.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the Envoy Gateway &lt;a href="https://hub.docker.com/r/envoyproxy/gateway/tags">image&lt;/a> with the correct release tag was published to Docker Hub.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the &lt;a href="https://github.com/envoyproxy/gateway/releases">release&lt;/a> was created.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Note that the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/docs/user/quickstart.md">Quickstart Guide&lt;/a> references are &lt;strong>not&lt;/strong> updated for release candidates. However, test
+the quickstart steps using the release candidate by manually updating the links.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">Generate&lt;/a> the GitHub changelog.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Ensure you check the &amp;ldquo;This is a pre-release&amp;rdquo; checkbox when editing the GitHub release.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If you find any bugs in this process, please create an issue.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="minor-release">Minor Release&lt;/h2>
+&lt;p>The following steps should be used for creating a minor release.&lt;/p>
+&lt;h3 id="prerequisites-1">Prerequisites&lt;/h3>
+&lt;ul>
+&lt;li>Permissions to push to the Envoy Gateway repository.&lt;/li>
+&lt;li>A release branch that has been cut from the corresponding release candidate. Refer to the
+&lt;a href="#release-candidate">Release Candidate&lt;/a> section for additional details on cutting a release candidate.&lt;/li>
+&lt;/ul>
+&lt;p>Set environment variables for use in subsequent steps:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">export&lt;/span> &lt;span style="color:#000">GITHUB_REMOTE&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>origin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>
+&lt;p>Clone the repo, checkout the &lt;code>main&lt;/code> branch, ensure it’s up-to-date, and your local branch is clean.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create a topic branch for adding the release notes, release announcement, and versioned release docs.&lt;/p>
+&lt;ol>
+&lt;li>Create the release notes. Reference previous &lt;a href="https://github.com/envoyproxy/gateway/tree/main/release-notes">release notes&lt;/a> for additional details. &lt;strong>Note:&lt;/strong> The release
+notes should be an accumulation of the release candidate release notes and any changes since the release
+candidate.&lt;/li>
+&lt;li>Create a release announcement. Refer to &lt;a href="https://github.com/envoyproxy/gateway/pull/635">PR #635&lt;/a> as an example release announcement.&lt;/li>
+&lt;li>Generate the versioned release docs:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span> make docs-release &lt;span style="color:#000">TAG&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Sign, commit, and push your changes to your fork.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Submit a &lt;a href="https://github.com/envoyproxy/gateway/pulls">Pull Request&lt;/a> to merge the changes into the &lt;code>main&lt;/code> branch. Do not proceed until all your PRs have merged
+and the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/build_and_test.yaml">Build and Test&lt;/a> has completed for your final PR.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Checkout the release branch.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git checkout -b release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> &lt;span style="color:#000">$GITHUB_REMOTE&lt;/span>/release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>If the tip of the release branch does not match the tip of &lt;code>main&lt;/code>, perform the following:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Create a topic branch from the release branch.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Cherry-pick the commits from &lt;code>main&lt;/code> that differ from the release branch.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Run tests locally, e.g. &lt;code>make lint&lt;/code>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Sign, commit, and push your topic branch to your Envoy Gateway fork.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Submit a PR to merge the topic from of your fork into the Envoy Gateway release branch.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Do not proceed until the PR has merged and CI passes for the merged PR.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>If you are still on your topic branch, change to the release branch:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git checkout release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Ensure your local release branch is up-to-date:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git pull &lt;span style="color:#000">$GITHUB_REMOTE&lt;/span> release/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>Tag the head of your release branch with the release tag. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git tag -a v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.0 -m &lt;span style="color:#4e9a06">&amp;#39;Envoy Gateway v${MAJOR_VERSION}.${MINOR_VERSION}.0 Release&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Note:&lt;/strong> The tag version differs from the release branch by including the &lt;code>.0&lt;/code> patch version.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Push the tag to the Envoy Gateway repository.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git push origin v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>This will trigger the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/.github/workflows/release.yaml">release GitHub action&lt;/a> that generates the release, release artifacts, etc.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the &lt;a href="https://github.com/envoyproxy/gateway/actions/workflows/release.yaml">release workflow&lt;/a> completed successfully.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the Envoy Gateway &lt;a href="https://hub.docker.com/r/envoyproxy/gateway/tags">image&lt;/a> with the correct release tag was published to Docker Hub.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the &lt;a href="https://github.com/envoyproxy/gateway/releases">release&lt;/a> was created.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Confirm that the steps in the &lt;a href="https://github.com/envoyproxy/gateway/blob/main/docs/user/quickstart.md">Quickstart Guide&lt;/a> work as expected.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes">Generate&lt;/a> the GitHub changelog and include the following text at the beginning of the release page:&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902">#&lt;/span> Release Announcement
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a40000">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a40000">&lt;/span>&lt;span style="color:#000;font-style:italic">Check out the [v${MAJOR_VERSION}.${MINOR_VERSION} release announcement]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">(https://gateway.envoyproxy.io/releases/v${MAJOR_VERSION}.${MINOR_VERSION}.html) to learn more about the release.
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you find any bugs in this process, please create an issue.&lt;/p>
+&lt;h2 id="announce-the-release">Announce the Release&lt;/h2>
+&lt;p>It&amp;rsquo;s important that the world knows about the release. Use the following steps to announce the release.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Set the release information in the Envoy Gateway Slack channel. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>Envoy Gateway v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> has been released: https://github.com/envoyproxy/gateway/releases/tag/v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Send a message to the Envoy Gateway Slack channel. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>On behalf of the entire Envoy Gateway community, I am pleased to announce the release of Envoy Gateway
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>. A big thank you to all the contributors that made this release possible.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Refer to the official v&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MAJOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span>.&lt;span style="color:#4e9a06">${&lt;/span>&lt;span style="color:#000">MINOR_VERSION&lt;/span>&lt;span style="color:#4e9a06">}&lt;/span> announcement &lt;span style="color:#204a87;font-weight:bold">for&lt;/span> release details and the project docs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>to start using Envoy Gateway.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Link to the GitHub release and release announcement page that highlights the release.&lt;/p>
+&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Working on the Envoy Gateway Docs</title><link>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/docs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.4.0/dev/docs/</guid><description>
+&lt;p>The documentation for the Envoy Gateway lives in the &lt;code>docs/&lt;/code> directory. Any
+individual document can be written using either &lt;a href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">reStructuredText&lt;/a> or &lt;a href="https://daringfireball.net/projects/markdown/syntax">Markdown&lt;/a>,
+you can choose the format that you&amp;rsquo;re most comfortable with when working on the
+documentation.&lt;/p>
+&lt;h2 id="documentation-structure">Documentation Structure&lt;/h2>
+&lt;p>We supported the versioned Docs now, the directory name under docs represents
+the version of docs. The root of the latest site is in &lt;code>docs/latest/index.rst&lt;/code>.
+This is probably where to start if you&amp;rsquo;re trying to understand how things fit together.&lt;/p>
+&lt;p>Note that the new contents should be added to &lt;code>docs/latest&lt;/code> and will be cut off at
+the next release. The contents under &lt;code>docs/v0.2.0&lt;/code> are auto-generated,
+and usually do not need to make changes to them, unless if you find the current release pages have
+some incorrect contents. If so, you should send a PR to update contents both of &lt;code>docs/latest&lt;/code>
+and &lt;code>docs/v0.2.0&lt;/code>.&lt;/p>
+&lt;p>It&amp;rsquo;s important to note that a given document &lt;em>must&lt;/em> have a reference in some
+&lt;code>.. toctree::&lt;/code> section for the document to be reachable. Not everything needs
+to be in &lt;code>docs/index.rst&lt;/code>&amp;rsquo;s &lt;code>toctree&lt;/code> though.&lt;/p>
+&lt;p>You can access the website which represents the current release in default,
+and you can access the website which contains the latest version changes in
+&lt;a href="https://gateway.envoyproxy.io/latest">Here&lt;/a> or at the footer of the pages.&lt;/p>
+&lt;h2 id="documentation-workflow">Documentation Workflow&lt;/h2>
+&lt;p>To work with the docs, just edit reStructuredText or Markdown files in &lt;code>docs&lt;/code>,
+then run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>make docs
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will create &lt;code>docs/html&lt;/code> with the built HTML pages. You can view the docs
+either simply by pointing a web browser at the &lt;code>file://&lt;/code> path to your
+&lt;code>docs/html&lt;/code>, or by firing up a static webserver from that directory, e.g.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>make docs-serve
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you want to generate a new release version of the docs, like &lt;code>v0.3.0&lt;/code>, then run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>make docs-release &lt;span style="color:#000">TAG&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>v0.3.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will update the VERSION file at the project root, which records current release version,
+and it will be used in the pages version context and binary version output. Also, this will generate
+new dir &lt;code>docs/v0.3.0&lt;/code>, which contains docs at v0.3.0 and updates artifact links to &lt;code>v0.3.0&lt;/code>
+in all files under &lt;code>docs/v0.3.0/user&lt;/code>, like &lt;code>quickstart.md&lt;/code>, &lt;code>http-routing.md&lt;/code> and etc.&lt;/p>
+&lt;h2 id="publishing-docs">Publishing Docs&lt;/h2>
+&lt;p>Whenever docs are pushed to &lt;code>main&lt;/code>, CI will publish the built docs to GitHub
+Pages. For more details, see &lt;code>.github/workflows/docs.yaml&lt;/code>.&lt;/p></description></item></channel></rss>

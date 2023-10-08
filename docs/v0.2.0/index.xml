@@ -1,0 +1,20 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Envoy Gateway – Welcome to Envoy Gateway</title><link>http://gateway.xunzhuo.cafe/docs/v0.2.0/</link><description>Recent content in Welcome to Envoy Gateway on Envoy Gateway</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://gateway.xunzhuo.cafe/docs/v0.2.0/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Design</title><link>http://gateway.xunzhuo.cafe/docs/v0.2.0/design/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.2.0/design/</guid><description/></item><item><title>Docs: User Guide</title><link>http://gateway.xunzhuo.cafe/docs/v0.2.0/user/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.2.0/user/</guid><description/></item><item><title>Docs: Development</title><link>http://gateway.xunzhuo.cafe/docs/v0.2.0/dev/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.2.0/dev/</guid><description/></item><item><title>Docs: Compatibility Matrix</title><link>http://gateway.xunzhuo.cafe/docs/v0.2.0/intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.2.0/intro/</guid><description>
+&lt;p>Envoy Gateway relies on the Envoy Proxy and the Gateway API, and runs
+within a Kubernetes cluster. Not all versions of each of these products
+can function together for Envoy Gateway. Supported version combinations
+are listed below; &lt;strong>bold&lt;/strong> type indicates the versions of the Envoy
+Proxy and the Gateway API actually compiled into each Envoy Gateway
+release.&lt;/p>
+&lt;hr>
+&lt;p>Envoy Gateway Envoy Proxy Gateway API Kubernetes minimum
+version version version version&lt;/p>
+&lt;p>v0.2.0 &lt;strong>v1.23-latest&lt;/strong> &lt;strong>v0.5.1&lt;/strong> v1.24&lt;/p>
+&lt;hr>
+&lt;p>::: note
+::: title
+Note
+:::&lt;/p>
+&lt;p>This project is under active development. Many, many features are not
+complete. We would love for you to
+&lt;code>get involved&amp;lt;../get_involved&amp;gt;&lt;/code>{.interpreted-text role=&amp;ldquo;doc&amp;rdquo;}.
+:::&lt;/p></description></item></channel></rss>

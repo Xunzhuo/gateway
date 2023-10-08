@@ -1,0 +1,57 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Envoy Gateway – Presentations</title><link>http://gateway.xunzhuo.cafe/blog/presentations/</link><description>Recent content in Presentations on Envoy Gateway</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://gateway.xunzhuo.cafe/blog/presentations/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: KubeCon EU 2023</title><link>http://gateway.xunzhuo.cafe/blog/1/01/01/kubecon-eu-2023/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/blog/1/01/01/kubecon-eu-2023/</guid><description>
+&lt;p>This page contains a list of presentations about the Envoy Proxy project.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Conference&lt;/th>
+&lt;th>Title&lt;/th>
+&lt;th>Speaker&lt;/th>
+&lt;th>Recording&lt;/th>
+&lt;th>Slides&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>KubeCon NA 2022&lt;/td>
+&lt;td>Envoy Gateway Project Update&lt;/td>
+&lt;td>Daneyon Hansen &amp;amp; Alice Wasko&lt;/td>
+&lt;td>&lt;a href="https://www.youtube.com/watch?v=3MUOZc8XNCc">YouTube&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://static.sched.com/hosted_files/envoyconna22/2f/Envoy_Gateway_Project_Update_EnvoyCon_NA_2022.pptx">Slides&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>KubeCon EU 2023&lt;/td>
+&lt;td>Envoy Gateway Project Update&lt;/td>
+&lt;td>Alice Wasko&lt;/td>
+&lt;td>&lt;a href="https://www.youtube.com/watch?v=4vnJxt9sVho">YouTube&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://static.sched.com/hosted_files/kccnceu2023/58/Kubecon_EU_2023_Envoy_Gateway_Update.pptx">Slides&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Blog: KubeCon NA 2022</title><link>http://gateway.xunzhuo.cafe/blog/1/01/01/kubecon-na-2022/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/blog/1/01/01/kubecon-na-2022/</guid><description>
+&lt;p>This page contains a list of presentations about the Envoy Proxy project.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Conference&lt;/th>
+&lt;th>Title&lt;/th>
+&lt;th>Speaker&lt;/th>
+&lt;th>Recording&lt;/th>
+&lt;th>Slides&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>KubeCon NA 2022&lt;/td>
+&lt;td>Envoy Gateway Project Update&lt;/td>
+&lt;td>Daneyon Hansen &amp;amp; Alice Wasko&lt;/td>
+&lt;td>&lt;a href="https://www.youtube.com/watch?v=3MUOZc8XNCc">YouTube&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://static.sched.com/hosted_files/envoyconna22/2f/Envoy_Gateway_Project_Update_EnvoyCon_NA_2022.pptx">Slides&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>KubeCon EU 2023&lt;/td>
+&lt;td>Envoy Gateway Project Update&lt;/td>
+&lt;td>Alice Wasko&lt;/td>
+&lt;td>&lt;a href="https://www.youtube.com/watch?v=4vnJxt9sVho">YouTube&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://static.sched.com/hosted_files/kccnceu2023/58/Kubecon_EU_2023_Envoy_Gateway_Update.pptx">Slides&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>

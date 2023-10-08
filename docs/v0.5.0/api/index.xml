@@ -1,0 +1,1948 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Envoy Gateway – API</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/</link><description>Recent content in API on Envoy Gateway</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://gateway.xunzhuo.cafe/docs/v0.5.0/api/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Config APIs</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/config_types/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/config_types/</guid><description>
+&lt;h2 id="packages">Packages&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="#configgatewayenvoyproxyiov1alpha1">config.gateway.envoyproxy.io/v1alpha1&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="configgatewayenvoyproxyiov1alpha1">config.gateway.envoyproxy.io/v1alpha1&lt;/h2>
+&lt;p>Package v1alpha1 contains API schema definitions for the config.gateway.envoyproxy.io
+API group.&lt;/p>
+&lt;h3 id="resource-types">Resource Types&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoyproxy">EnvoyProxy&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="customtag">CustomTag&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxytracing">ProxyTracing&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#customtagtype">CustomTagType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the type of custom tag.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>literal&lt;/code> &lt;em>&lt;a href="#literalcustomtag">LiteralCustomTag&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Literal adds hard-coded value to each span. It&amp;rsquo;s required when the type is &amp;ldquo;Literal&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>environment&lt;/code> &lt;em>&lt;a href="#environmentcustomtag">EnvironmentCustomTag&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Environment adds value from environment variable to each span. It&amp;rsquo;s required when the type is &amp;ldquo;Environment&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>requestHeader&lt;/code> &lt;em>&lt;a href="#requestheadercustomtag">RequestHeaderCustomTag&lt;/a>&lt;/em>&lt;/td>
+&lt;td>RequestHeader adds value from request header to each span. It&amp;rsquo;s required when the type is &amp;ldquo;RequestHeader&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="customtagtype">CustomTagType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#customtag">CustomTag&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="environmentcustomtag">EnvironmentCustomTag&lt;/h2>
+&lt;p>EnvironmentCustomTag adds value from environment variable to each span.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#customtag">CustomTag&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>name&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Name defines the name of the environment variable which to extract the value from.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>defaultValue&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>DefaultValue defines the default value to use if the environment variable is not set.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygateway">EnvoyGateway&lt;/h2>
+&lt;p>EnvoyGateway is the schema for the envoygateways API.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>config.gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>EnvoyGateway&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>gateway&lt;/code> &lt;em>&lt;a href="#gateway">Gateway&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Gateway defines desired Gateway API specific configuration. If unset, default configuration parameters will apply.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>provider&lt;/code> &lt;em>&lt;a href="#envoygatewayprovider">EnvoyGatewayProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Provider defines the desired provider and provider-specific configuration. If unspecified, the Kubernetes provider is used with default configuration parameters.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>logging&lt;/code> &lt;em>&lt;a href="#envoygatewaylogging">EnvoyGatewayLogging&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Logging defines logging parameters for Envoy Gateway.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>admin&lt;/code> &lt;em>&lt;a href="#envoygatewayadmin">EnvoyGatewayAdmin&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Admin defines the desired admin related abilities. If unspecified, the Admin is used with default configuration parameters.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>rateLimit&lt;/code> &lt;em>&lt;a href="#ratelimit">RateLimit&lt;/a>&lt;/em>&lt;/td>
+&lt;td>RateLimit defines the configuration associated with the Rate Limit service deployed by Envoy Gateway required to implement the Global Rate limiting functionality. The specific rate limit service used here is the reference implementation in Envoy. For more details visit &lt;a href="https://github.com/envoyproxy/ratelimit">https://github.com/envoyproxy/ratelimit&lt;/a>. This configuration is unneeded for &amp;ldquo;Local&amp;rdquo; rate limiting.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>extensionManager&lt;/code> &lt;em>&lt;a href="#extensionmanager">ExtensionManager&lt;/a>&lt;/em>&lt;/td>
+&lt;td>ExtensionManager defines an extension manager to register for the Envoy Gateway Control Plane.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>extensionApis&lt;/code> &lt;em>&lt;a href="#extensionapisettings">ExtensionAPISettings&lt;/a>&lt;/em>&lt;/td>
+&lt;td>ExtensionAPIs defines the settings related to specific Gateway API Extensions implemented by Envoy Gateway&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayadmin">EnvoyGatewayAdmin&lt;/h2>
+&lt;p>EnvoyGatewayAdmin defines the Envoy Gateway Admin configuration.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>address&lt;/code> &lt;em>&lt;a href="#envoygatewayadminaddress">EnvoyGatewayAdminAddress&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Address defines the address of Envoy Gateway Admin Server.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>debug&lt;/code> &lt;em>boolean&lt;/em>&lt;/td>
+&lt;td>Debug defines if enable the /debug endpoint of Envoy Gateway.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayadminaddress">EnvoyGatewayAdminAddress&lt;/h2>
+&lt;p>EnvoyGatewayAdminAddress defines the Envoy Gateway Admin Address configuration.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayadmin">EnvoyGatewayAdmin&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>port&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Port defines the port the admin server is exposed on.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Host defines the admin server hostname.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewaycustomprovider">EnvoyGatewayCustomProvider&lt;/h2>
+&lt;p>EnvoyGatewayCustomProvider defines configuration for the Custom provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayprovider">EnvoyGatewayProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>resource&lt;/code> &lt;em>&lt;a href="#envoygatewayresourceprovider">EnvoyGatewayResourceProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Resource defines the desired resource provider. This provider is used to specify the provider to be used to retrieve the resource configurations such as Gateway API resources&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>infrastructure&lt;/code> &lt;em>&lt;a href="#envoygatewayinfrastructureprovider">EnvoyGatewayInfrastructureProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Infrastructure defines the desired infrastructure provider. This provider is used to specify the provider to be used to provide an environment to deploy the out resources like the Envoy Proxy data plane.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayfileresourceprovider">EnvoyGatewayFileResourceProvider&lt;/h2>
+&lt;p>EnvoyGatewayFileResourceProvider defines configuration for the File Resource provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayresourceprovider">EnvoyGatewayResourceProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>paths&lt;/code> &lt;em>string array&lt;/em>&lt;/td>
+&lt;td>Paths are the paths to a directory or file containing the resource configuration. Recursive sub directories are not currently supported.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayhostinfrastructureprovider">EnvoyGatewayHostInfrastructureProvider&lt;/h2>
+&lt;p>EnvoyGatewayHostInfrastructureProvider defines configuration for the Host Infrastructure provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayinfrastructureprovider">EnvoyGatewayInfrastructureProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="envoygatewayinfrastructureprovider">EnvoyGatewayInfrastructureProvider&lt;/h2>
+&lt;p>EnvoyGatewayInfrastructureProvider defines configuration for the Custom Infrastructure provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaycustomprovider">EnvoyGatewayCustomProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#infrastructureprovidertype">InfrastructureProviderType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the type of infrastructure providers to use. Supported types are &amp;ldquo;Host&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>&lt;a href="#envoygatewayhostinfrastructureprovider">EnvoyGatewayHostInfrastructureProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Host defines the configuration of the Host provider. Host provides runtime deployment of the data plane as a child process on the host environment.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewaykubernetesprovider">EnvoyGatewayKubernetesProvider&lt;/h2>
+&lt;p>EnvoyGatewayKubernetesProvider defines configuration for the Kubernetes provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayprovider">EnvoyGatewayProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>rateLimitDeployment&lt;/code> &lt;em>&lt;a href="#kubernetesdeploymentspec">KubernetesDeploymentSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>RateLimitDeployment defines the desired state of the Envoy ratelimit deployment resource. If unspecified, default settings for the managed Envoy ratelimit deployment resource are applied.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>watch&lt;/code> &lt;em>&lt;a href="#kuberneteswatchmode">KubernetesWatchMode&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Watch holds configuration of which input resources should be watched and reconciled.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>deploy&lt;/code> &lt;em>&lt;a href="#kubernetesdeploymode">KubernetesDeployMode&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Deploy holds configuration of how output managed resources such as the Envoy Proxy data plane should be deployed&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>overwrite_control_plane_certs&lt;/code> &lt;em>boolean&lt;/em>&lt;/td>
+&lt;td>OverwriteControlPlaneCerts updates the secrets containing the control plane certs, when set.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewaylogcomponent">EnvoyGatewayLogComponent&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>EnvoyGatewayLogComponent defines a component that supports a configured logging level.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaylogging">EnvoyGatewayLogging&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="envoygatewaylogging">EnvoyGatewayLogging&lt;/h2>
+&lt;p>EnvoyGatewayLogging defines logging for Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>level&lt;/code> &lt;em>object (keys:&lt;a href="#envoygatewaylogcomponent">EnvoyGatewayLogComponent&lt;/a>, values:&lt;a href="#loglevel">LogLevel&lt;/a>)&lt;/em>&lt;/td>
+&lt;td>Level is the logging level. If unspecified, defaults to &amp;ldquo;info&amp;rdquo;. EnvoyGatewayLogComponent options: default/provider/gateway-api/xds-translator/xds-server/infrastructure/global-ratelimit. LogLevel options: debug/info/error/warn.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayprovider">EnvoyGatewayProvider&lt;/h2>
+&lt;p>EnvoyGatewayProvider defines the desired configuration of a provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#providertype">ProviderType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the type of provider to use. Supported types are &amp;ldquo;Kubernetes&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kubernetes&lt;/code> &lt;em>&lt;a href="#envoygatewaykubernetesprovider">EnvoyGatewayKubernetesProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Kubernetes defines the configuration of the Kubernetes provider. Kubernetes provides runtime configuration via the Kubernetes API.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>custom&lt;/code> &lt;em>&lt;a href="#envoygatewaycustomprovider">EnvoyGatewayCustomProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Custom defines the configuration for the Custom provider. This provider allows you to define a specific resource provider and a infrastructure provider.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayresourceprovider">EnvoyGatewayResourceProvider&lt;/h2>
+&lt;p>EnvoyGatewayResourceProvider defines configuration for the Custom Resource provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaycustomprovider">EnvoyGatewayCustomProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#resourceprovidertype">ResourceProviderType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the type of resource provider to use. Supported types are &amp;ldquo;File&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>file&lt;/code> &lt;em>&lt;a href="#envoygatewayfileresourceprovider">EnvoyGatewayFileResourceProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>File defines the configuration of the File provider. File provides runtime configuration defined by one or more files.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoygatewayspec">EnvoyGatewaySpec&lt;/h2>
+&lt;p>EnvoyGatewaySpec defines the desired state of Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>gateway&lt;/code> &lt;em>&lt;a href="#gateway">Gateway&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Gateway defines desired Gateway API specific configuration. If unset, default configuration parameters will apply.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>provider&lt;/code> &lt;em>&lt;a href="#envoygatewayprovider">EnvoyGatewayProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Provider defines the desired provider and provider-specific configuration. If unspecified, the Kubernetes provider is used with default configuration parameters.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>logging&lt;/code> &lt;em>&lt;a href="#envoygatewaylogging">EnvoyGatewayLogging&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Logging defines logging parameters for Envoy Gateway.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>admin&lt;/code> &lt;em>&lt;a href="#envoygatewayadmin">EnvoyGatewayAdmin&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Admin defines the desired admin related abilities. If unspecified, the Admin is used with default configuration parameters.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>rateLimit&lt;/code> &lt;em>&lt;a href="#ratelimit">RateLimit&lt;/a>&lt;/em>&lt;/td>
+&lt;td>RateLimit defines the configuration associated with the Rate Limit service deployed by Envoy Gateway required to implement the Global Rate limiting functionality. The specific rate limit service used here is the reference implementation in Envoy. For more details visit &lt;a href="https://github.com/envoyproxy/ratelimit">https://github.com/envoyproxy/ratelimit&lt;/a>. This configuration is unneeded for &amp;ldquo;Local&amp;rdquo; rate limiting.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>extensionManager&lt;/code> &lt;em>&lt;a href="#extensionmanager">ExtensionManager&lt;/a>&lt;/em>&lt;/td>
+&lt;td>ExtensionManager defines an extension manager to register for the Envoy Gateway Control Plane.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>extensionApis&lt;/code> &lt;em>&lt;a href="#extensionapisettings">ExtensionAPISettings&lt;/a>&lt;/em>&lt;/td>
+&lt;td>ExtensionAPIs defines the settings related to specific Gateway API Extensions implemented by Envoy Gateway&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoyproxy">EnvoyProxy&lt;/h2>
+&lt;p>EnvoyProxy is the schema for the envoyproxies API.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>config.gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>EnvoyProxy&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metadata&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">ObjectMeta&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Refer to Kubernetes API documentation for fields of &lt;code>metadata&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>spec&lt;/code> &lt;em>&lt;a href="#envoyproxyspec">EnvoyProxySpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>EnvoyProxySpec defines the desired state of EnvoyProxy.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoyproxykubernetesprovider">EnvoyProxyKubernetesProvider&lt;/h2>
+&lt;p>EnvoyProxyKubernetesProvider defines configuration for the Kubernetes resource provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxyprovider">EnvoyProxyProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>envoyDeployment&lt;/code> &lt;em>&lt;a href="#kubernetesdeploymentspec">KubernetesDeploymentSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>EnvoyDeployment defines the desired state of the Envoy deployment resource. If unspecified, default settings for the managed Envoy deployment resource are applied.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>envoyService&lt;/code> &lt;em>&lt;a href="#kubernetesservicespec">KubernetesServiceSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>EnvoyService defines the desired state of the Envoy service resource. If unspecified, default settings for the managed Envoy service resource are applied.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoyproxyprovider">EnvoyProxyProvider&lt;/h2>
+&lt;p>EnvoyProxyProvider defines the desired state of a resource provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxyspec">EnvoyProxySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#providertype">ProviderType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the type of resource provider to use. A resource provider provides infrastructure resources for running the data plane, e.g. Envoy proxy, and optional auxiliary control planes. Supported types are &amp;ldquo;Kubernetes&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kubernetes&lt;/code> &lt;em>&lt;a href="#envoyproxykubernetesprovider">EnvoyProxyKubernetesProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Kubernetes defines the desired state of the Kubernetes resource provider. Kubernetes provides infrastructure resources for running the data plane, e.g. Envoy proxy. If unspecified and type is &amp;ldquo;Kubernetes&amp;rdquo;, default settings for managed Kubernetes resources are applied.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoyproxyspec">EnvoyProxySpec&lt;/h2>
+&lt;p>EnvoyProxySpec defines the desired state of EnvoyProxy.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxy">EnvoyProxy&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>provider&lt;/code> &lt;em>&lt;a href="#envoyproxyprovider">EnvoyProxyProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Provider defines the desired resource provider and provider-specific configuration. If unspecified, the &amp;ldquo;Kubernetes&amp;rdquo; resource provider is used with default configuration parameters.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>logging&lt;/code> &lt;em>&lt;a href="#proxylogging">ProxyLogging&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Logging defines logging parameters for managed proxies.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>telemetry&lt;/code> &lt;em>&lt;a href="#proxytelemetry">ProxyTelemetry&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Telemetry defines telemetry parameters for managed proxies.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>bootstrap&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Bootstrap defines the Envoy Bootstrap as a YAML string. Visit &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/bootstrap/v3/bootstrap.proto#envoy-v3-api-msg-config-bootstrap-v3-bootstrap">https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/bootstrap/v3/bootstrap.proto#envoy-v3-api-msg-config-bootstrap-v3-bootstrap&lt;/a> to learn more about the syntax. If set, this is the Bootstrap configuration used for the managed Envoy Proxy fleet instead of the default Bootstrap configuration set by Envoy Gateway. Some fields within the Bootstrap that are required to communicate with the xDS Server (Envoy Gateway) and receive xDS resources from it are not configurable and will result in the &lt;code>EnvoyProxy&lt;/code> resource being rejected. Backward compatibility across minor versions is not guaranteed. We strongly recommend using &lt;code>egctl x translate&lt;/code> to generate a &lt;code>EnvoyProxy&lt;/code> resource with the &lt;code>Bootstrap&lt;/code> field set to the default Bootstrap configuration used. You can edit this configuration, and rerun &lt;code>egctl x translate&lt;/code> to ensure there are no validation errors.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="extensionapisettings">ExtensionAPISettings&lt;/h2>
+&lt;p>ExtensionAPISettings defines the settings specific to Gateway API Extensions.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>enableEnvoyPatchPolicy&lt;/code> &lt;em>boolean&lt;/em>&lt;/td>
+&lt;td>EnableEnvoyPatchPolicy enables Envoy Gateway to reconcile and implement the EnvoyPatchPolicy resources.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="extensionhooks">ExtensionHooks&lt;/h2>
+&lt;p>ExtensionHooks defines extension hooks across all supported runners&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#extensionmanager">ExtensionManager&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>xdsTranslator&lt;/code> &lt;em>&lt;a href="#xdstranslatorhooks">XDSTranslatorHooks&lt;/a>&lt;/em>&lt;/td>
+&lt;td>XDSTranslator defines all the supported extension hooks for the xds-translator runner&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="extensionmanager">ExtensionManager&lt;/h2>
+&lt;p>ExtensionManager defines the configuration for registering an extension manager to the Envoy Gateway control plane.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>resources&lt;/code> &lt;em>&lt;a href="#groupversionkind">GroupVersionKind&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Resources defines the set of K8s resources the extension will handle.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>hooks&lt;/code> &lt;em>&lt;a href="#extensionhooks">ExtensionHooks&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Hooks defines the set of hooks the extension supports&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>service&lt;/code> &lt;em>&lt;a href="#extensionservice">ExtensionService&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Service defines the configuration of the extension service that the Envoy Gateway Control Plane will call through extension hooks.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="extensionservice">ExtensionService&lt;/h2>
+&lt;p>ExtensionService defines the configuration for connecting to a registered extension service.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#extensionmanager">ExtensionManager&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Host define the extension service hostname.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>port&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Port defines the port the extension service is exposed on.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>tls&lt;/code> &lt;em>&lt;a href="#extensiontls">ExtensionTLS&lt;/a>&lt;/em>&lt;/td>
+&lt;td>TLS defines TLS configuration for communication between Envoy Gateway and the extension service.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="extensiontls">ExtensionTLS&lt;/h2>
+&lt;p>ExtensionTLS defines the TLS configuration when connecting to an extension service&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#extensionservice">ExtensionService&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>certificateRef&lt;/code> &lt;em>&lt;a href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.SecretObjectReference">SecretObjectReference&lt;/a>&lt;/em>&lt;/td>
+&lt;td>CertificateRef contains a references to objects (Kubernetes objects or otherwise) that contains a TLS certificate and private keys. These certificates are used to establish a TLS handshake to the extension server.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CertificateRef can only reference a Kubernetes Secret at this time.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="fileenvoyproxyaccesslog">FileEnvoyProxyAccessLog&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogsink">ProxyAccessLogSink&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>path&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Path defines the file path used to expose envoy access log(e.g. /dev/stdout). Empty value disables accesslog.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="gateway">Gateway&lt;/h2>
+&lt;p>Gateway defines the desired Gateway API configuration of Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>controllerName&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>ControllerName defines the name of the Gateway API controller. If unspecified, defaults to &amp;ldquo;gateway.envoyproxy.io/gatewayclass-controller&amp;rdquo;. See the following for additional details: &lt;a href="https://gateway-api.sigs.k8s.io/v1alpha2/references/spec/#gateway.networking.k8s.io/v1alpha2.GatewayClass">https://gateway-api.sigs.k8s.io/v1alpha2/references/spec/#gateway.networking.k8s.io/v1alpha2.GatewayClass&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="groupversionkind">GroupVersionKind&lt;/h2>
+&lt;p>GroupVersionKind unambiguously identifies a Kind. It can be converted to k8s.io/apimachinery/pkg/runtime/schema.GroupVersionKind&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#extensionmanager">ExtensionManager&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>group&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>version&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="infrastructureprovidertype">InfrastructureProviderType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>InfrastructureProviderType defines the types of custom infrastructure providers supported by Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayinfrastructureprovider">EnvoyGatewayInfrastructureProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="kubernetescontainerspec">KubernetesContainerSpec&lt;/h2>
+&lt;p>KubernetesContainerSpec defines the desired state of the Kubernetes container resource.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#kubernetesdeploymentspec">KubernetesDeploymentSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>env&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#envvar-v1-core">EnvVar&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>List of environment variables to set in the container.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>resources&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#resourcerequirements-v1-core">ResourceRequirements&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Resources required by this container. More info: &lt;a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>securityContext&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#securitycontext-v1-core">SecurityContext&lt;/a>&lt;/em>&lt;/td>
+&lt;td>SecurityContext defines the security options the container should be run with. If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext. More info: &lt;a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">https://kubernetes.io/docs/tasks/configure-pod-container/security-context/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>image&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Image specifies the EnvoyProxy container image to be used, instead of the default image.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>volumeMounts&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#volumemount-v1-core">VolumeMount&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>VolumeMounts are volumes to mount into the container&amp;rsquo;s filesystem. Cannot be updated.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="kubernetesdeploymode">KubernetesDeployMode&lt;/h2>
+&lt;p>KubernetesDeployMode holds configuration for how to deploy managed resources such as the Envoy Proxy data plane fleet.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaykubernetesprovider">EnvoyGatewayKubernetesProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="kubernetesdeploymentspec">KubernetesDeploymentSpec&lt;/h2>
+&lt;p>KubernetesDeploymentSpec defines the desired state of the Kubernetes deployment resource.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaykubernetesprovider">EnvoyGatewayKubernetesProvider&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoyproxykubernetesprovider">EnvoyProxyKubernetesProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>replicas&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Replicas is the number of desired pods. Defaults to 1.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>strategy&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#deploymentstrategy-v1-apps">DeploymentStrategy&lt;/a>&lt;/em>&lt;/td>
+&lt;td>The deployment strategy to use to replace existing pods with new ones.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>pod&lt;/code> &lt;em>&lt;a href="#kubernetespodspec">KubernetesPodSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Pod defines the desired annotations and securityContext of container.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>container&lt;/code> &lt;em>&lt;a href="#kubernetescontainerspec">KubernetesContainerSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Container defines the resources and securityContext of container.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="kubernetespodspec">KubernetesPodSpec&lt;/h2>
+&lt;p>KubernetesPodSpec defines the desired state of the Kubernetes pod resource.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#kubernetesdeploymentspec">KubernetesDeploymentSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>annotations&lt;/code> &lt;em>object (keys:string, values:string)&lt;/em>&lt;/td>
+&lt;td>Annotations are the annotations that should be appended to the pods. By default, no pod annotations are appended.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>labels&lt;/code> &lt;em>object (keys:string, values:string)&lt;/em>&lt;/td>
+&lt;td>Labels are the additional labels that should be tagged to the pods. By default, no additional pod labels are tagged.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>securityContext&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#podsecuritycontext-v1-core">PodSecurityContext&lt;/a>&lt;/em>&lt;/td>
+&lt;td>SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty. See type description for default values of each field.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>affinity&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#affinity-v1-core">Affinity&lt;/a>&lt;/em>&lt;/td>
+&lt;td>If specified, the pod&amp;rsquo;s scheduling constraints.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>tolerations&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#toleration-v1-core">Toleration&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>If specified, the pod&amp;rsquo;s tolerations.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>volumes&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#volume-v1-core">Volume&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Volumes that can be mounted by containers belonging to the pod. More info: &lt;a href="https://kubernetes.io/docs/concepts/storage/volumes">https://kubernetes.io/docs/concepts/storage/volumes&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="kubernetesservicespec">KubernetesServiceSpec&lt;/h2>
+&lt;p>KubernetesServiceSpec defines the desired state of the Kubernetes service resource.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxykubernetesprovider">EnvoyProxyKubernetesProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>annotations&lt;/code> &lt;em>object (keys:string, values:string)&lt;/em>&lt;/td>
+&lt;td>Annotations that should be appended to the service. By default, no annotations are appended.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#servicetype">ServiceType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type determines how the Service is exposed. Defaults to LoadBalancer. Valid options are ClusterIP, LoadBalancer and NodePort. &amp;ldquo;LoadBalancer&amp;rdquo; means a service will be exposed via an external load balancer (if the cloud provider supports it). &amp;ldquo;ClusterIP&amp;rdquo; means a service will only be accessible inside the cluster, via the cluster IP. &amp;ldquo;NodePort&amp;rdquo; means a service will be exposed on a static Port on all Nodes of the cluster.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="kuberneteswatchmode">KubernetesWatchMode&lt;/h2>
+&lt;p>KubernetesWatchMode holds the configuration for which input resources to watch and reconcile.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaykubernetesprovider">EnvoyGatewayKubernetesProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>Namespaces&lt;/code> &lt;em>string array&lt;/em>&lt;/td>
+&lt;td>Namespaces holds the list of namespaces that Envoy Gateway will watch for namespaced scoped resources such as Gateway, HTTPRoute and Service. Note that Envoy Gateway will continue to reconcile relevant cluster scoped resources such as GatewayClass that it is linked to. By default, when this field is unset or empty, Envoy Gateway will watch for input namespaced resources from all namespaces.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="literalcustomtag">LiteralCustomTag&lt;/h2>
+&lt;p>LiteralCustomTag adds hard-coded value to each span.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#customtag">CustomTag&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>value&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Value defines the hard-coded value to add to each span.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="logcomponent">LogComponent&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>LogComponent defines a component that supports a configured logging level.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxylogging">ProxyLogging&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="loglevel">LogLevel&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>LogLevel defines a log level for Envoy Gateway and EnvoyProxy system logs. This type is not implemented for EnvoyProxy until &lt;a href="https://github.com/envoyproxy/gateway/issues/280">https://github.com/envoyproxy/gateway/issues/280&lt;/a> is fixed.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewaylogging">EnvoyGatewayLogging&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#proxylogging">ProxyLogging&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="metricsink">MetricSink&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxymetrics">ProxyMetrics&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#metricsinktype">MetricSinkType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the metric sink type. EG currently only supports OpenTelemetry.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>openTelemetry&lt;/code> &lt;em>&lt;a href="#opentelemetrysink">OpenTelemetrySink&lt;/a>&lt;/em>&lt;/td>
+&lt;td>OpenTelemetry defines the configuration for OpenTelemetry sink. It&amp;rsquo;s required if the sink type is OpenTelemetry.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="metricsinktype">MetricSinkType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#metricsink">MetricSink&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="opentelemetryenvoyproxyaccesslog">OpenTelemetryEnvoyProxyAccessLog&lt;/h2>
+&lt;p>TODO: consider reuse ExtensionService?&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogsink">ProxyAccessLogSink&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Host define the extension service hostname.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>port&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Port defines the port the extension service is exposed on.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>resources&lt;/code> &lt;em>object (keys:string, values:string)&lt;/em>&lt;/td>
+&lt;td>Resources is a set of labels that describe the source of a log entry, including envoy node info. It&amp;rsquo;s recommended to follow &lt;a href="https://opentelemetry.io/docs/reference/specification/resource/semantic_conventions/">semantic conventions&lt;/a>.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="opentelemetrysink">OpenTelemetrySink&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#metricsink">MetricSink&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Host define the service hostname.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>port&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Port defines the port the service is exposed on.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="prometheusprovider">PrometheusProvider&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxymetrics">ProxyMetrics&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="providertype">ProviderType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>ProviderType defines the types of providers supported by Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayprovider">EnvoyGatewayProvider&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoyproxyprovider">EnvoyProxyProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="proxyaccesslog">ProxyAccessLog&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxytelemetry">ProxyTelemetry&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>disable&lt;/code> &lt;em>boolean&lt;/em>&lt;/td>
+&lt;td>Disable disables access logging for managed proxies if set to true.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>settings&lt;/code> &lt;em>&lt;a href="#proxyaccesslogsetting">ProxyAccessLogSetting&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Settings defines accesslog settings for managed proxies. If unspecified, will send default format to stdout.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxyaccesslogformat">ProxyAccessLogFormat&lt;/h2>
+&lt;p>ProxyAccessLogFormat defines the format of accesslog.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogsetting">ProxyAccessLogSetting&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#proxyaccesslogformattype">ProxyAccessLogFormatType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the type of accesslog format.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>text&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Text defines the text accesslog format, following Envoy accesslog formatting, empty value results in proxy&amp;rsquo;s default access log format. It&amp;rsquo;s required when the format type is &amp;ldquo;Text&amp;rdquo;. Envoy &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators">command operators&lt;/a> may be used in the format. The &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#config-access-log-format-strings">format string documentation&lt;/a> provides more information.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>json&lt;/code> &lt;em>object (keys:string, values:string)&lt;/em>&lt;/td>
+&lt;td>JSON is additional attributes that describe the specific event occurrence. Structured format for the envoy access logs. Envoy &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators">command operators&lt;/a> can be used as values for fields within the Struct. It&amp;rsquo;s required when the format type is &amp;ldquo;JSON&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxyaccesslogformattype">ProxyAccessLogFormatType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogformat">ProxyAccessLogFormat&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="proxyaccesslogsetting">ProxyAccessLogSetting&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslog">ProxyAccessLog&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>format&lt;/code> &lt;em>&lt;a href="#proxyaccesslogformat">ProxyAccessLogFormat&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Format defines the format of accesslog.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>sinks&lt;/code> &lt;em>&lt;a href="#proxyaccesslogsink">ProxyAccessLogSink&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Sinks defines the sinks of accesslog.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxyaccesslogsink">ProxyAccessLogSink&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogsetting">ProxyAccessLogSetting&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#proxyaccesslogsinktype">ProxyAccessLogSinkType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the type of accesslog sink.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>file&lt;/code> &lt;em>&lt;a href="#fileenvoyproxyaccesslog">FileEnvoyProxyAccessLog&lt;/a>&lt;/em>&lt;/td>
+&lt;td>File defines the file accesslog sink.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>openTelemetry&lt;/code> &lt;em>&lt;a href="#opentelemetryenvoyproxyaccesslog">OpenTelemetryEnvoyProxyAccessLog&lt;/a>&lt;/em>&lt;/td>
+&lt;td>OpenTelemetry defines the OpenTelemetry accesslog sink.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxyaccesslogsinktype">ProxyAccessLogSinkType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxyaccesslogsink">ProxyAccessLogSink&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="proxylogging">ProxyLogging&lt;/h2>
+&lt;p>ProxyLogging defines logging parameters for managed proxies.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxyspec">EnvoyProxySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>level&lt;/code> &lt;em>object (keys:&lt;a href="#logcomponent">LogComponent&lt;/a>, values:&lt;a href="#loglevel">LogLevel&lt;/a>)&lt;/em>&lt;/td>
+&lt;td>Level is a map of logging level per component, where the component is the key and the log level is the value. If unspecified, defaults to &amp;ldquo;default: warn&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxymetrics">ProxyMetrics&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxytelemetry">ProxyTelemetry&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>prometheus&lt;/code> &lt;em>&lt;a href="#prometheusprovider">PrometheusProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Prometheus defines the configuration for Admin endpoint &lt;code>/stats/prometheus&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>sinks&lt;/code> &lt;em>&lt;a href="#metricsink">MetricSink&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Sinks defines the metric sinks where metrics are sent to.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxytelemetry">ProxyTelemetry&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyproxyspec">EnvoyProxySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>accessLog&lt;/code> &lt;em>&lt;a href="#proxyaccesslog">ProxyAccessLog&lt;/a>&lt;/em>&lt;/td>
+&lt;td>AccessLogs defines accesslog parameters for managed proxies. If unspecified, will send default format to stdout.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>tracing&lt;/code> &lt;em>&lt;a href="#proxytracing">ProxyTracing&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Tracing defines tracing configuration for managed proxies. If unspecified, will not send tracing data.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metrics&lt;/code> &lt;em>&lt;a href="#proxymetrics">ProxyMetrics&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Metrics defines metrics configuration for managed proxies.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="proxytracing">ProxyTracing&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxytelemetry">ProxyTelemetry&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>samplingRate&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>SamplingRate controls the rate at which traffic will be selected for tracing if no prior sampling decision has been made. Defaults to 100, valid values [0-100]. 100 indicates 100% sampling.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>customTags&lt;/code> &lt;em>object (keys:string, values:&lt;a href="#customtag">CustomTag&lt;/a>)&lt;/em>&lt;/td>
+&lt;td>CustomTags defines the custom tags to add to each span. If provider is kubernetes, pod name and namespace are added by default.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>provider&lt;/code> &lt;em>&lt;a href="#tracingprovider">TracingProvider&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Provider defines the tracing provider. Only OpenTelemetry is supported currently.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimit">RateLimit&lt;/h2>
+&lt;p>RateLimit defines the configuration associated with the Rate Limit Service used for Global Rate Limiting.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygateway">EnvoyGateway&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoygatewayspec">EnvoyGatewaySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>backend&lt;/code> &lt;em>&lt;a href="#ratelimitdatabasebackend">RateLimitDatabaseBackend&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Backend holds the configuration associated with the database backend used by the rate limit service to store state associated with global ratelimiting.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitdatabasebackend">RateLimitDatabaseBackend&lt;/h2>
+&lt;p>RateLimitDatabaseBackend defines the configuration associated with the database backend used by the rate limit service.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimit">RateLimit&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#ratelimitdatabasebackendtype">RateLimitDatabaseBackendType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the type of database backend to use. Supported types are: * Redis: Connects to a Redis database.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>redis&lt;/code> &lt;em>&lt;a href="#ratelimitredissettings">RateLimitRedisSettings&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Redis defines the settings needed to connect to a Redis database.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitdatabasebackendtype">RateLimitDatabaseBackendType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>RateLimitDatabaseBackendType specifies the types of database backend to be used by the rate limit service.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitdatabasebackend">RateLimitDatabaseBackend&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="ratelimitredissettings">RateLimitRedisSettings&lt;/h2>
+&lt;p>RateLimitRedisSettings defines the configuration for connecting to redis database.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitdatabasebackend">RateLimitDatabaseBackend&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>url&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>URL of the Redis Database.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>tls&lt;/code> &lt;em>&lt;a href="#redistlssettings">RedisTLSSettings&lt;/a>&lt;/em>&lt;/td>
+&lt;td>TLS defines TLS configuration for connecting to redis database.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="redistlssettings">RedisTLSSettings&lt;/h2>
+&lt;p>RedisTLSSettings defines the TLS configuration for connecting to redis database.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitredissettings">RateLimitRedisSettings&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>certificateRef&lt;/code> &lt;em>&lt;a href="https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.SecretObjectReference">SecretObjectReference&lt;/a>&lt;/em>&lt;/td>
+&lt;td>CertificateRef defines the client certificate reference for TLS connections. Currently only a Kubernetes Secret of type TLS is supported.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="requestheadercustomtag">RequestHeaderCustomTag&lt;/h2>
+&lt;p>RequestHeaderCustomTag adds value from request header to each span.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#customtag">CustomTag&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>name&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Name defines the name of the request header which to extract the value from.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>defaultValue&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>DefaultValue defines the default value to use if the request header is not set.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="resourceprovidertype">ResourceProviderType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>ResourceProviderType defines the types of custom resource providers supported by Envoy Gateway.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoygatewayresourceprovider">EnvoyGatewayResourceProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="servicetype">ServiceType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>ServiceType string describes ingress methods for a service&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#kubernetesservicespec">KubernetesServiceSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="tracingprovider">TracingProvider&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#proxytracing">ProxyTracing&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#tracingprovidertype">TracingProviderType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the tracing provider type. EG currently only supports OpenTelemetry.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>host&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Host define the provider service hostname.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>port&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Port defines the port the provider service is exposed on.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="tracingprovidertype">TracingProviderType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#tracingprovider">TracingProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="xdstranslatorhook">XDSTranslatorHook&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>XDSTranslatorHook defines the types of hooks that an Envoy Gateway extension may support for the xds-translator&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#xdstranslatorhooks">XDSTranslatorHooks&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="xdstranslatorhooks">XDSTranslatorHooks&lt;/h2>
+&lt;p>XDSTranslatorHooks contains all the pre and post hooks for the xds-translator runner.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#extensionhooks">ExtensionHooks&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>pre&lt;/code> &lt;em>&lt;a href="#xdstranslatorhook">XDSTranslatorHook&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>post&lt;/code> &lt;em>&lt;a href="#xdstranslatorhook">XDSTranslatorHook&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: Extension APIs</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/extension_types/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/extension_types/</guid><description>
+&lt;h2 id="packages">Packages&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="#gatewayenvoyproxyiov1alpha1">gateway.envoyproxy.io/v1alpha1&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="gatewayenvoyproxyiov1alpha1">gateway.envoyproxy.io/v1alpha1&lt;/h2>
+&lt;p>Package v1alpha1 contains API schema definitions for the gateway.envoyproxy.io API group.&lt;/p>
+&lt;h3 id="resource-types">Resource Types&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="#authenticationfilter">AuthenticationFilter&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoypatchpolicy">EnvoyPatchPolicy&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#envoypatchpolicylist">EnvoyPatchPolicyList&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#ratelimitfilter">RateLimitFilter&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="authenticationfilter">AuthenticationFilter&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>AuthenticationFilter&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metadata&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">ObjectMeta&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Refer to Kubernetes API documentation for fields of &lt;code>metadata&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>spec&lt;/code> &lt;em>&lt;a href="#authenticationfilterspec">AuthenticationFilterSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Spec defines the desired state of the AuthenticationFilter type.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="authenticationfilterspec">AuthenticationFilterSpec&lt;/h2>
+&lt;p>AuthenticationFilterSpec defines the desired state of the AuthenticationFilter type.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#authenticationfilter">AuthenticationFilter&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#authenticationfiltertype">AuthenticationFilterType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type defines the type of authentication provider to use. Supported provider types are &amp;ldquo;JWT&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>jwtProviders&lt;/code> &lt;em>&lt;a href="#jwtauthenticationfilterprovider">JwtAuthenticationFilterProvider&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>JWT defines the JSON Web Token (JWT) authentication provider type. When multiple jwtProviders are specified, the JWT is considered valid if any of the providers successfully validate the JWT. For additional details, see &lt;a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/jwt_authn_filter.html">https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/jwt_authn_filter.html&lt;/a>.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="authenticationfiltertype">AuthenticationFilterType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>AuthenticationFilterType is a type of authentication provider.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#authenticationfilterspec">AuthenticationFilterSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="claimtoheader">ClaimToHeader&lt;/h2>
+&lt;p>ClaimToHeader defines a configuration to convert JWT claims into HTTP headers&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#jwtauthenticationfilterprovider">JwtAuthenticationFilterProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>header&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Header defines the name of the HTTP request header that the JWT Claim will be saved into.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>claim&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Claim is the JWT Claim that should be saved into the header : it can be a nested claim of type (eg. &amp;ldquo;claim.nested.key&amp;rdquo;, &amp;ldquo;sub&amp;rdquo;). The nested claim name must use dot &amp;ldquo;.&amp;rdquo; to separate the JSON name path.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoyjsonpatchconfig">EnvoyJSONPatchConfig&lt;/h2>
+&lt;p>EnvoyJSONPatchConfig defines the configuration for patching a Envoy xDS Resource using JSONPatch semantic&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoypatchpolicyspec">EnvoyPatchPolicySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#envoyresourcetype">EnvoyResourceType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type is the typed URL of the Envoy xDS Resource&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>name&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Name is the name of the resource&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>operation&lt;/code> &lt;em>&lt;a href="#jsonpatchoperation">JSONPatchOperation&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Patch defines the JSON Patch Operation&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoypatchpolicy">EnvoyPatchPolicy&lt;/h2>
+&lt;p>EnvoyPatchPolicy allows the user to modify the generated Envoy xDS resources by Envoy Gateway using this patch API&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoypatchpolicylist">EnvoyPatchPolicyList&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>EnvoyPatchPolicy&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metadata&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">ObjectMeta&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Refer to Kubernetes API documentation for fields of &lt;code>metadata&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>spec&lt;/code> &lt;em>&lt;a href="#envoypatchpolicyspec">EnvoyPatchPolicySpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Spec defines the desired state of EnvoyPatchPolicy.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoypatchpolicylist">EnvoyPatchPolicyList&lt;/h2>
+&lt;p>EnvoyPatchPolicyList contains a list of EnvoyPatchPolicy resources.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>EnvoyPatchPolicyList&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metadata&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#listmeta-v1-meta">ListMeta&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Refer to Kubernetes API documentation for fields of &lt;code>metadata&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>items&lt;/code> &lt;em>&lt;a href="#envoypatchpolicy">EnvoyPatchPolicy&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoypatchpolicyspec">EnvoyPatchPolicySpec&lt;/h2>
+&lt;p>EnvoyPatchPolicySpec defines the desired state of EnvoyPatchPolicy.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoypatchpolicy">EnvoyPatchPolicy&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#envoypatchtype">EnvoyPatchType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type decides the type of patch. Valid EnvoyPatchType values are &amp;ldquo;JSONPatch&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>jsonPatches&lt;/code> &lt;em>&lt;a href="#envoyjsonpatchconfig">EnvoyJSONPatchConfig&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>JSONPatch defines the JSONPatch configuration.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>targetRef&lt;/code> &lt;em>&lt;a href="#policytargetreference">PolicyTargetReference&lt;/a>&lt;/em>&lt;/td>
+&lt;td>TargetRef is the name of the Gateway API resource this policy is being attached to. Currently only attaching to Gateway is supported This Policy and the TargetRef MUST be in the same namespace for this Policy to have effect and be applied to the Gateway TargetRef&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>priority&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>Priority of the EnvoyPatchPolicy. If multiple EnvoyPatchPolicies are applied to the same TargetRef, they will be applied in the ascending order of the priority i.e. int32.min has the highest priority and int32.max has the lowest priority. Defaults to 0.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="envoypatchtype">EnvoyPatchType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>EnvoyPatchType specifies the types of Envoy patching mechanisms.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoypatchpolicyspec">EnvoyPatchPolicySpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="envoyresourcetype">EnvoyResourceType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>EnvoyResourceType specifies the type URL of the Envoy resource.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyjsonpatchconfig">EnvoyJSONPatchConfig&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="globalratelimit">GlobalRateLimit&lt;/h2>
+&lt;p>GlobalRateLimit defines global rate limit configuration.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitfilterspec">RateLimitFilterSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>rules&lt;/code> &lt;em>&lt;a href="#ratelimitrule">RateLimitRule&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Rules are a list of RateLimit selectors and limits. Each rule and its associated limit is applied in a mutually exclusive way i.e. if multiple rules get selected, each of their associated limits get applied, so a single traffic request might increase the rate limit counters for multiple rules if selected.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="headermatch">HeaderMatch&lt;/h2>
+&lt;p>HeaderMatch defines the match attributes within the HTTP Headers of the request.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitselectcondition">RateLimitSelectCondition&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#headermatchtype">HeaderMatchType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type specifies how to match against the value of the header.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>name&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Name of the HTTP header.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>value&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Value within the HTTP header. Due to the case-insensitivity of header names, &amp;ldquo;foo&amp;rdquo; and &amp;ldquo;Foo&amp;rdquo; are considered equivalent. Do not set this field when Type=&amp;ldquo;Distinct&amp;rdquo;, implying matching on any/all unique values within the header.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="headermatchtype">HeaderMatchType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>HeaderMatchType specifies the semantics of how HTTP header values should be compared. Valid HeaderMatchType values are &amp;ldquo;Exact&amp;rdquo;, &amp;ldquo;RegularExpression&amp;rdquo;, and &amp;ldquo;Distinct&amp;rdquo;.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#headermatch">HeaderMatch&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="jsonpatchoperation">JSONPatchOperation&lt;/h2>
+&lt;p>JSONPatchOperation defines the JSON Patch Operation as defined in &lt;a href="https://datatracker.ietf.org/doc/html/rfc6902">https://datatracker.ietf.org/doc/html/rfc6902&lt;/a>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#envoyjsonpatchconfig">EnvoyJSONPatchConfig&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>op&lt;/code> &lt;em>&lt;a href="#jsonpatchoperationtype">JSONPatchOperationType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Op is the type of operation to perform&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>path&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Path is the location of the target document/field where the operation will be performed Refer to &lt;a href="https://datatracker.ietf.org/doc/html/rfc6901">https://datatracker.ietf.org/doc/html/rfc6901&lt;/a> for more details.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>value&lt;/code> &lt;em>&lt;a href="#json">JSON&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Value is the new value of the path location.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="jsonpatchoperationtype">JSONPatchOperationType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>JSONPatchOperationType specifies the JSON Patch operations that can be performed.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#jsonpatchoperation">JSONPatchOperation&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="jwtauthenticationfilterprovider">JwtAuthenticationFilterProvider&lt;/h2>
+&lt;p>JwtAuthenticationFilterProvider defines the JSON Web Token (JWT) authentication provider type and how JWTs should be verified:&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#authenticationfilterspec">AuthenticationFilterSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>name&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Name defines a unique name for the JWT provider. A name can have a variety of forms, including RFC1123 subdomains, RFC 1123 labels, or RFC 1035 labels.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>issuer&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Issuer is the principal that issued the JWT and takes the form of a URL or email address. For additional details, see &lt;a href="https://tools.ietf.org/html/rfc7519#section-4.1.1">https://tools.ietf.org/html/rfc7519#section-4.1.1&lt;/a> for URL format and &lt;a href="https://rfc-editor.org/rfc/rfc5322.html">https://rfc-editor.org/rfc/rfc5322.html&lt;/a> for email format. If not provided, the JWT issuer is not checked.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>audiences&lt;/code> &lt;em>string array&lt;/em>&lt;/td>
+&lt;td>Audiences is a list of JWT audiences allowed access. For additional details, see &lt;a href="https://tools.ietf.org/html/rfc7519#section-4.1.3">https://tools.ietf.org/html/rfc7519#section-4.1.3&lt;/a>. If not provided, JWT audiences are not checked.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>remoteJWKS&lt;/code> &lt;em>&lt;a href="#remotejwks">RemoteJWKS&lt;/a>&lt;/em>&lt;/td>
+&lt;td>RemoteJWKS defines how to fetch and cache JSON Web Key Sets (JWKS) from a remote HTTP/HTTPS endpoint.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>claimToHeaders&lt;/code> &lt;em>&lt;a href="#claimtoheader">ClaimToHeader&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>ClaimToHeaders is a list of JWT claims that must be extracted into HTTP request headers For examples, following config: The claim must be of type; string, int, double, bool. Array type claims are not supported&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitfilter">RateLimitFilter&lt;/h2>
+&lt;p>RateLimitFilter allows the user to limit the number of incoming requests to a predefined value based on attributes within the traffic flow.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>apiVersion&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>gateway.envoyproxy.io/v1alpha1&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>kind&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>&lt;code>RateLimitFilter&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>metadata&lt;/code> &lt;em>&lt;a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#objectmeta-v1-meta">ObjectMeta&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Refer to Kubernetes API documentation for fields of &lt;code>metadata&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>spec&lt;/code> &lt;em>&lt;a href="#ratelimitfilterspec">RateLimitFilterSpec&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Spec defines the desired state of RateLimitFilter.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitfilterspec">RateLimitFilterSpec&lt;/h2>
+&lt;p>RateLimitFilterSpec defines the desired state of RateLimitFilter.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitfilter">RateLimitFilter&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#ratelimittype">RateLimitType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Type decides the scope for the RateLimits. Valid RateLimitType values are &amp;ldquo;Global&amp;rdquo;.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>global&lt;/code> &lt;em>&lt;a href="#globalratelimit">GlobalRateLimit&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Global defines global rate limit configuration.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitrule">RateLimitRule&lt;/h2>
+&lt;p>RateLimitRule defines the semantics for matching attributes from the incoming requests, and setting limits for them.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#globalratelimit">GlobalRateLimit&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>clientSelectors&lt;/code> &lt;em>&lt;a href="#ratelimitselectcondition">RateLimitSelectCondition&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>ClientSelectors holds the list of select conditions to select specific clients using attributes from the traffic flow. All individual select conditions must hold True for this rule and its limit to be applied. If this field is empty, it is equivalent to True, and the limit is applied.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>limit&lt;/code> &lt;em>&lt;a href="#ratelimitvalue">RateLimitValue&lt;/a>&lt;/em>&lt;/td>
+&lt;td>Limit holds the rate limit values. This limit is applied for traffic flows when the selectors compute to True, causing the request to be counted towards the limit. The limit is enforced and the request is ratelimited, i.e. a response with 429 HTTP status code is sent back to the client when the selected requests have reached the limit.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimitselectcondition">RateLimitSelectCondition&lt;/h2>
+&lt;p>RateLimitSelectCondition specifies the attributes within the traffic flow that can be used to select a subset of clients to be ratelimited. All the individual conditions must hold True for the overall condition to hold True.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitrule">RateLimitRule&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>headers&lt;/code> &lt;em>&lt;a href="#headermatch">HeaderMatch&lt;/a> array&lt;/em>&lt;/td>
+&lt;td>Headers is a list of request headers to match. Multiple header values are ANDed together, meaning, a request MUST match all the specified headers.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>sourceIP&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Deprecated: Use SourceCIDR instead.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>sourceCIDR&lt;/code> &lt;em>&lt;a href="#sourcematch">SourceMatch&lt;/a>&lt;/em>&lt;/td>
+&lt;td>SourceCIDR is the client IP Address range to match on.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="ratelimittype">RateLimitType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>RateLimitType specifies the types of RateLimiting.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitfilterspec">RateLimitFilterSpec&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="ratelimitunit">RateLimitUnit&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>RateLimitUnit specifies the intervals for setting rate limits. Valid RateLimitUnit values are &amp;ldquo;Second&amp;rdquo;, &amp;ldquo;Minute&amp;rdquo;, &amp;ldquo;Hour&amp;rdquo;, and &amp;ldquo;Day&amp;rdquo;.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitvalue">RateLimitValue&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="ratelimitvalue">RateLimitValue&lt;/h2>
+&lt;p>RateLimitValue defines the limits for rate limiting.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitrule">RateLimitRule&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>requests&lt;/code> &lt;em>integer&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>unit&lt;/code> &lt;em>&lt;a href="#ratelimitunit">RateLimitUnit&lt;/a>&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="remotejwks">RemoteJWKS&lt;/h2>
+&lt;p>RemoteJWKS defines how to fetch and cache JSON Web Key Sets (JWKS) from a remote HTTP/HTTPS endpoint.&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#jwtauthenticationfilterprovider">JwtAuthenticationFilterProvider&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>uri&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>URI is the HTTPS URI to fetch the JWKS. Envoy&amp;rsquo;s system trust bundle is used to validate the server certificate.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="sourcematch">SourceMatch&lt;/h2>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#ratelimitselectcondition">RateLimitSelectCondition&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Description&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>type&lt;/code> &lt;em>&lt;a href="#sourcematchtype">SourceMatchType&lt;/a>&lt;/em>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>value&lt;/code> &lt;em>string&lt;/em>&lt;/td>
+&lt;td>Value is the IP CIDR that represents the range of Source IP Addresses of the client. These could also be the intermediate addresses through which the request has flown through and is part of the &lt;code>X-Forwarded-For&lt;/code> header. For example, &lt;code>192.168.0.1/32&lt;/code>, &lt;code>192.168.0.0/24&lt;/code>, &lt;code>001:db8::/64&lt;/code>.&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="sourcematchtype">SourceMatchType&lt;/h2>
+&lt;p>&lt;em>Underlying type:&lt;/em> &lt;code>string&lt;/code>&lt;/p>
+&lt;p>&lt;em>Appears in:&lt;/em>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#sourcematch">SourceMatch&lt;/a>&lt;/li>
+&lt;/ul></description></item></channel></rss>

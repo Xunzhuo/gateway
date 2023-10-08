@@ -1,0 +1,35 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Envoy Gateway – Welcome to Envoy Gateway</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/</link><description>Recent content in Welcome to Envoy Gateway on Envoy Gateway</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://gateway.xunzhuo.cafe/docs/v0.5.0/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Design</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/design/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/design/</guid><description/></item><item><title>Docs: User Guide</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/user/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/user/</guid><description/></item><item><title>Docs: Development</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/dev/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/dev/</guid><description/></item><item><title>Docs: API</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/api/</guid><description/></item><item><title>Docs: Compatibility Matrix</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/intro/</guid><description>
+&lt;p>Envoy Gateway relies on the Envoy Proxy and the Gateway API, and runs
+within a Kubernetes cluster. Not all versions of each of these products
+can function together for Envoy Gateway. Supported version combinations
+are listed below; &lt;strong>bold&lt;/strong> type indicates the versions of the Envoy
+Proxy and the Gateway API actually compiled into each Envoy Gateway
+release.&lt;/p>
+&lt;p>+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| Envoy | Envoy | Rate | Gateway | Kubernetes |
+| Gateway | Proxy | Limit | API | version |
+| version | version | version | version | |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| v0.5.0 | &lt;strong>v1.27 | &amp;gt; &lt;strong>e | &amp;gt; * | v1.25, v1.26, |
+| | -latest&lt;/strong> | 059638d&lt;/strong> | &lt;em>v0.7.1&lt;/em>* | v1.27 |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| v0.4.0 | &lt;strong>v1.26 | &amp;gt; &lt;strong>5 | &amp;gt; * | v1.25, v1.26, |
+| | -latest&lt;/strong> | 42a6047&lt;/strong> | &lt;em>v0.6.2&lt;/em>* | v1.27 |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| v0.3.0 | &lt;strong>v1.25 | &amp;gt; &lt;strong>f | &amp;gt; * | v1.24, v1.25, |
+| | -latest&lt;/strong> | 28024e3&lt;/strong> | &lt;em>v0.6.1&lt;/em>* | v1.26 |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| v0.2.0 | &lt;strong>v1.23 | | &amp;gt; * | v1.24 |
+| | -latest&lt;/strong> | | &lt;em>v0.5.1&lt;/em>* | |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+
+| latest | &lt;strong>dev | &amp;gt; * | &amp;gt; * | v1.25, v1.26, |
+| | -latest&lt;/strong> | &lt;em>master&lt;/em>* | &lt;em>v0.7.1&lt;/em>* | v1.27 |
++&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&lt;/p>
+&lt;p>::: note
+::: title
+Note
+:::&lt;/p>
+&lt;p>This project is under active development. Many, many features are not
+complete. We would love for you to
+&lt;code>get involved&amp;lt;../get_involved&amp;gt;&lt;/code>{.interpreted-text role=&amp;ldquo;doc&amp;rdquo;}.
+:::&lt;/p></description></item><item><title>Docs: Helm</title><link>http://gateway.xunzhuo.cafe/docs/v0.5.0/helm/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://gateway.xunzhuo.cafe/docs/v0.5.0/helm/</guid><description/></item></channel></rss>
