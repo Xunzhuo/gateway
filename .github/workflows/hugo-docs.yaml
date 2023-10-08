@@ -1,0 +1,49 @@
+name: Hugo Docs
+on:
+  push:
+    branches:
+    - "main"
+    - "release/v*"
+    paths-ignore:
+    - "**/*.png"
+  pull_request:
+    branches:
+    - "main"
+    - "release/v*"
+    paths-ignore:
+    - "**/*.png"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Site Dependencies
+        run: cd site && npm install
+
+      - name: Build Site
+        run: cd site && npm run build:production
+
+      - name: Deploy Site
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site/public
+          cname: gateway.xunzhuo.cafe
