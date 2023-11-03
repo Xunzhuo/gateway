@@ -20,8 +20,10 @@ import (
 	resourcev3 "github.com/envoyproxy/go-control-plane/pkg/resource/v3"
 	"github.com/tetratelabs/multierror"
 
+	"github.com/envoyproxy/gateway/api/v1alpha1"
 	extensionTypes "github.com/envoyproxy/gateway/internal/extension/types"
 	"github.com/envoyproxy/gateway/internal/ir"
+	"github.com/envoyproxy/gateway/internal/logging"
 	"github.com/envoyproxy/gateway/internal/xds/types"
 )
 
@@ -415,6 +417,9 @@ func addXdsCluster(tCtx *types.ResourceVersionTable, args *xdsClusterArgs) error
 
 	xdsCluster := buildXdsCluster(args)
 	xdsEndpoints := buildXdsClusterLoadAssignment(args.name, args.settings)
+
+	logging.DefaultLogger(v1alpha1.LogLevelInfo).Info("cluster", "xdsEndpoints", xdsEndpoints, "xdsCluster", xdsCluster, "endpoint type", args.endpointType, "args", args)
+
 	// Use EDS for static endpoints
 	if args.endpointType == Static {
 		if err := tCtx.AddXdsResource(resourcev3.EndpointType, xdsEndpoints); err != nil {
