@@ -38,6 +38,13 @@ const (
 	// The value should be the name of the accepted Envoy Gateway.
 	OwningGatewayNameLabel = "gateway.envoyproxy.io/owning-gateway-name"
 
+	// GatewayNameLabel is a must from [GEP-1762](https://gateway-api.sigs.k8s.io/geps/gep-1762/)
+	GatewayNameLabel = "gateway.networking.k8s.io/gateway-name"
+
+	// GatewayNamespaceLabel is the namespace of the Gateway.
+	// All resources provisioned in the same namespace as EG.
+	GatewayNamespaceLabel = "gateway.networking.k8s.io/gateway-namespace"
+
 	// minEphemeralPort is the first port in the ephemeral port range.
 	minEphemeralPort = 1024
 	// wellKnownPortShift is the constant added to the well known port (1-1023)

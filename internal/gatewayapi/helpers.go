@@ -16,6 +16,7 @@ import (
 	gwapiv1 "sigs.k8s.io/gateway-api/apis/v1"
 	"sigs.k8s.io/gateway-api/apis/v1alpha2"
 
+	"github.com/envoyproxy/gateway/internal/feature"
 	"github.com/envoyproxy/gateway/internal/ir"
 )
 
@@ -232,10 +233,18 @@ func ValidateGRPCRouteFilter(filter *v1alpha2.GRPCRouteFilter, extGKs ...schema.
 // GatewayOwnerLabels returns the Gateway Owner labels using
 // the provided namespace and name as the values.
 func GatewayOwnerLabels(namespace, name string) map[string]string {
-	return map[string]string{
+	res := map[string]string{
 		OwningGatewayNamespaceLabel: namespace,
 		OwningGatewayNameLabel:      name,
 	}
+
+	// Guard this with a feature gateway so that we don't add these labels during upgrade.
+	if feature.Gates.Enabled(feature.AutomatedDeployments) {
+		res[GatewayNameLabel] = name
+		res[GatewayNamespaceLabel] = namespace
+	}
+
+	return res
 }
 
 // GatewayClassOwnerLabel returns the GatewayCLass Owner label using
