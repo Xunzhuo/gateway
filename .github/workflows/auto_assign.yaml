@@ -12,12 +12,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const github = require('@actions/github');
-            const context = github.context;
             const pullRequestNumber = context.payload.pull_request.number;
-            const repo = context.repo;
             await github.rest.pulls.requestReviewers({
-              ...repo,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               pull_number: pullRequestNumber,
               reviewers: ['Xunzhuo']
             });
