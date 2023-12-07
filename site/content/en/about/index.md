@@ -1,5 +1,5 @@
 ---
-title: About Envoy Gateway
+title: About Envoy Gateway Page
 linkTitle: About
 ---
 
