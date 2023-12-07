@@ -1,0 +1,17 @@
+name: Auto Request Review
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  request-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request review from team
+        uses: peter-evans/create-pull-request-review@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          review-request-team: 'gateway-reviewers'
+          repository: ${{ github.repository }}
+          pull-request-number: ${{ github.event.pull_request.number }}
