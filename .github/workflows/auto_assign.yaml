@@ -5,13 +5,20 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  request-review:
+  auto-request-review:
     runs-on: ubuntu-latest
     steps:
       - name: Request review from team
-        uses: peter-evans/create-pull-request-review@v1
+        uses: actions/github-script@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          review-request-team: 'gateway-reviewers'
-          repository: ${{ github.repository }}
-          pull-request-number: ${{ github.event.pull_request.number }}
+          script: |
+            const github = require('@actions/github');
+            const context = github.context;
+            const pullRequestNumber = context.payload.pull_request.number;
+            const repo = context.repo;
+            await github.rest.pulls.requestReviewers({
+              ...repo,
+              pull_number: pullRequestNumber,
+              reviewers: ['Xunzhuo']
+            });
+          github-token: ${{ secrets.GITHUB_TOKEN }}
