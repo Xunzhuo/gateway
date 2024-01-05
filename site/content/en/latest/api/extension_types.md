@@ -1060,6 +1060,7 @@ _Appears in:_
 
 | Field | Description |
 | --- | --- |
+| `patch` _[KubernetesPatchSpec](#kubernetespatchspec)_ | Patch defines how to perform the patch operation to deployment |
 | `replicas` _integer_ | Replicas is the number of desired pods. Defaults to 1. |
 | `strategy` _[DeploymentStrategy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#deploymentstrategy-v1-apps)_ | The deployment strategy to use to replace existing pods with new ones. |
 | `pod` _[KubernetesPodSpec](#kubernetespodspec)_ | Pod defines the desired specification of pod. |
@@ -1082,6 +1083,21 @@ _Appears in:_
 | `maxReplicas` _integer_ | maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas. |
 | `metrics` _[MetricSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#metricspec-v2-autoscaling) array_ | metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used). If left empty, it defaults to being based on CPU utilization with average on 80% usage. |
 | `behavior` _[HorizontalPodAutoscalerBehavior](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#horizontalpodautoscalerbehavior-v2-autoscaling)_ | behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used. See k8s.io.autoscaling.v2.HorizontalPodAutoScalerBehavior. |
+
+
+#### KubernetesPatchSpec
+
+
+
+KubernetesPatchSpec defines how to perform the patch operation
+
+_Appears in:_
+- [KubernetesDeploymentSpec](#kubernetesdeploymentspec)
+
+| Field | Description |
+| --- | --- |
+| `type` _[MergeType](#mergetype)_ | Type is the type of merge operation to perform |
+| `object` _[JSON](#json)_ | Object contains the raw configuration for merged object |
 
 
 #### KubernetesPodSpec
@@ -1121,6 +1137,7 @@ _Appears in:_
 | `annotations` _object (keys:string, values:string)_ | Annotations that should be appended to the service. By default, no annotations are appended. |
 | `type` _[ServiceType](#servicetype)_ | Type determines how the Service is exposed. Defaults to LoadBalancer. Valid options are ClusterIP, LoadBalancer and NodePort. "LoadBalancer" means a service will be exposed via an external load balancer (if the cloud provider supports it). "ClusterIP" means a service will only be accessible inside the cluster, via the cluster IP. "NodePort" means a service will be exposed on a static Port on all Nodes of the cluster. |
 | `loadBalancerClass` _string_ | LoadBalancerClass, when specified, allows for choosing the LoadBalancer provider implementation if more than one are available or is otherwise expected to be specified |
+| `useListenerPortAsContainerPort` _boolean_ | UseListenerPortAsContainerPort defines if use listenr ports as container ports default is false. |
 | `allocateLoadBalancerNodePorts` _boolean_ | AllocateLoadBalancerNodePorts defines if NodePorts will be automatically allocated for services with type LoadBalancer. Default is "true". It may be set to "false" if the cluster load-balancer does not rely on NodePorts. If the caller requests specific NodePorts (by specifying a value), those requests will be respected, regardless of this field. This field may only be set for services with type LoadBalancer and will be cleared if the type is changed to any other type. |
 | `loadBalancerIP` _string_ | LoadBalancerIP defines the IP Address of the underlying load balancer service. This field may be ignored if the load balancer provider does not support this feature. This field has been deprecated in Kubernetes, but it is still used for setting the IP Address in some cloud providers such as GCP. |
 
@@ -1216,6 +1233,17 @@ LogLevel defines a log level for Envoy Gateway and EnvoyProxy system logs.
 _Appears in:_
 - [EnvoyGatewayLogging](#envoygatewaylogging)
 - [ProxyLogging](#proxylogging)
+
+
+
+#### MergeType
+
+_Underlying type:_ `string`
+
+MergeType defines the type of merge operation
+
+_Appears in:_
+- [KubernetesPatchSpec](#kubernetespatchspec)
 
 
 

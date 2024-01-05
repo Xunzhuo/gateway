@@ -9,6 +9,7 @@ import (
 	appv1 "k8s.io/api/apps/v1"
 	autoscalingv2 "k8s.io/api/autoscaling/v2"
 	corev1 "k8s.io/api/core/v1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
 const (
@@ -52,6 +53,11 @@ const (
 
 // KubernetesDeploymentSpec defines the desired state of the Kubernetes deployment resource.
 type KubernetesDeploymentSpec struct {
+	// Patch defines how to perform the patch operation to deployment
+	//
+	// +optional
+	Patch *KubernetesPatchSpec `json:"patch,omitempty"`
+
 	// Replicas is the number of desired pods. Defaults to 1.
 	//
 	// +optional
@@ -214,6 +220,11 @@ type KubernetesServiceSpec struct {
 	// +optional
 	LoadBalancerClass *string `json:"loadBalancerClass,omitempty"`
 
+	// UseListenerPortAsContainerPort defines if use listenr ports as container ports
+	// default is false.
+	//  +optional
+	UseListenerPortAsContainerPort *bool `json:"useListenerPortAsContainerPort,omitempty"`
+
 	// AllocateLoadBalancerNodePorts defines if NodePorts will be automatically allocated for
 	// services with type LoadBalancer. Default is "true". It may be set to "false" if the cluster
 	// load-balancer does not rely on NodePorts. If the caller requests specific NodePorts (by specifying a
@@ -332,4 +343,23 @@ type KubernetesHorizontalPodAutoscalerSpec struct {
 	//
 	// +optional
 	Behavior *autoscalingv2.HorizontalPodAutoscalerBehavior `json:"behavior,omitempty"`
+}
+
+// MergeType defines the type of merge operation
+type MergeType string
+
+const (
+	// StrategicMerge indicates a strategic merge patch type
+	StrategicMerge MergeType = "StrategicMerge"
+	// JSONMerge indicates a JSON merge patch type
+	JSONMerge MergeType = "JSONMerge"
+)
+
+// KubernetesPatchSpec defines how to perform the patch operation
+type KubernetesPatchSpec struct {
+	// Type is the type of merge operation to perform
+	Type MergeType `json:"type"`
+
+	// Object contains the raw configuration for merged object
+	Object apiextensionsv1.JSON `json:"object"`
 }

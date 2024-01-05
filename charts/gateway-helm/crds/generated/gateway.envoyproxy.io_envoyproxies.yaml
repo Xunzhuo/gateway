@@ -2004,6 +2004,22 @@ spec:
                               - name
                               type: object
                             type: array
+                          patch:
+                            description: Patch defines how to perform the patch operation
+                              to deployment
+                            properties:
+                              object:
+                                description: Object contains the raw configuration
+                                  for merged object
+                                x-kubernetes-preserve-unknown-fields: true
+                              type:
+                                description: Type is the type of merge operation to
+                                  perform
+                                type: string
+                            required:
+                            - object
+                            - type
+                            type: object
                           pod:
                             description: Pod defines the desired specification of
                               pod.
@@ -6569,6 +6585,10 @@ spec:
                             - LoadBalancer
                             - NodePort
                             type: string
+                          useListenerPortAsContainerPort:
+                            description: UseListenerPortAsContainerPort defines if
+                              use listenr ports as container ports default is false.
+                            type: boolean
                         type: object
                         x-kubernetes-validations:
                         - message: allocateLoadBalancerNodePorts can only be set for
