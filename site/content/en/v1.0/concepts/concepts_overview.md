@@ -1,14 +1,21 @@
-# Envoy Gateway Resources
++++
+title = "Envoy Gateway Resources"
++++
 
 There are several resources that play a part in enabling you to meet your Kubernetes ingress traffic handling needs. This page provides a brief overview of the resources you’ll be working with.
 
-# Overview
+## Overview
 
-## Kubernetes Gateway API Resources
+![](/img/envoy-gateway-resources-overview.png)
+
+### Kubernetes Gateway API Resources
+
 - **GatewayClass:** Defines a class of Gateways with common configuration.
 - **Gateway:** Specifies how traffic can enter the cluster.
 - **Routes:** **HTTPRoute, GRPCRoute, TLSRoute, TCPRoute, UDPRoute:** Define routing rules for different types of traffic.
-## Envoy Gateway (EG) API Resources
+
+### Envoy Gateway (EG) API Resources
+
 - **EnvoyProxy:** Represents the deployment and configuration of the Envoy proxy within a Kubernetes cluster, managing its lifecycle and settings.
 - **EnvoyPatchPolicy, ClientTrafficPolicy, SecurityPolicy, BackendTrafficPolicy, EnvoyExtensionPolicy, BackendTLSPolicy:** Additional policies and configurations specific to Envoy Gateway.
 - **Backend:** A resource that makes routing to cluster-external backends easier and makes access to external processes via Unix Domain Sockets possible.
@@ -26,8 +33,6 @@ There are several resources that play a part in enabling you to meet your Kubern
 | [EnvoyProxy][13]                                                        | EG API      | No       | Customize & Extend | GatewayClass Gateway   | The EnvoyProxy resource represents the deployment and configuration of the Envoy proxy itself within a Kubernetes cluster, managing its lifecycle and settings. **Note:**_Most specific configuration wins_ |
 | [EnvoyPatchPolicy][14]                                                  | EG API      | No       | Customize & Extend | GatewayClass Gateway   | This policy defines custom patches to be applied to Envoy Gateway resources, allowing users to tailor the configuration to their specific needs. **Note:**_Most specific configuration wins_                |
 | [EnvoyExtensionPolicy][15]                                              | EG API      | No       | Customize & Extend | Gateway Route, Backend | Allows for the configuration of Envoy proxy extensions, enabling custom behavior and functionality. **Note:**_Most specific configuration wins_                                                             |
-
-
 
 [1]:	https://gateway-api.sigs.k8s.io/api-types/gatewayclass/
 [2]:	https://gateway-api.sigs.k8s.io/api-types/gateway/
