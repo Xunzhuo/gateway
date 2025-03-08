@@ -1,5 +1,5 @@
 +++
-title = "Envoy Gateway API"
+title = "API Reference"
 +++
 
 
