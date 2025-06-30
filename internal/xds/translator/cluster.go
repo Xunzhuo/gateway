@@ -513,14 +513,37 @@ func buildHostOverrideLoadBalancingPolicy(cluster *clusterv3.Cluster, settings [
 		overrideHostSources = append(overrideHostSources, overrideSource)
 	}
 
+	// Build fallback policy - use round robin as default fallback
+	fallbackPolicy := &clusterv3.LoadBalancingPolicy{
+		Policies: []*clusterv3.LoadBalancingPolicy_Policy{{
+			TypedExtensionConfig: &corev3.TypedExtensionConfig{
+				Name: "envoy.load_balancing_policies.round_robin",
+				TypedConfig: func() *anypb.Any {
+					roundRobinPolicy := &round_robinv3.RoundRobin{}
+					typedConfig, _ := anypb.New(roundRobinPolicy)
+					return typedConfig
+				}(),
+			},
+		}},
+	}
+
 	// Build override host policy
 	overrideHostPolicy := &override_hostv3.OverrideHost{
 		OverrideHostSources: overrideHostSources,
+		FallbackPolicy:      fallbackPolicy,
 	}
 
 	typedOverrideHostPolicy, err := anypb.New(overrideHostPolicy)
 	if err != nil {
 		return fmt.Errorf("failed to marshal override host policy: %w", err)
+	}
+
+	// Clear CommonLbConfig fields that conflict with LoadBalancingPolicy
+	// This is required because Envoy doesn't allow both LoadBalancingPolicy and
+	// CommonLbConfig partial fields to be set simultaneously
+	if cluster.CommonLbConfig != nil {
+		cluster.CommonLbConfig.LocalityConfigSpecifier = nil
+		cluster.CommonLbConfig.HealthyPanicThreshold = nil
 	}
 
 	// Set the load balancing policy on the cluster
